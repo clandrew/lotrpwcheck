@@ -12,6 +12,8 @@ This is a tool for verifying whether a password for the game "J.R.R. Tolkien's T
   * The buttons "All Items" and "No Items" are there as a convenience to fill or clear your inventory.
   * Note: the One Ring is always in Frodo's inventory, regardless of whether you flag it as enabled through the password.
   
+* You use the keyboard to type passwords + arrow keys to navigate between characters, so it's a bit quicker as compared to the game.
+  
 * This program will ensure you get a password with a good checksum. That being said, the game will reject some passwords for reasons other than the checksum. For example, if you specify a location code beyond the allowed bounds- these yield "(invalid)" in the dropdown.
 
 * The choice of whether a character is player-controlled or AI-controlled is not encoded in passwords. It looks to be based off of whether you have a controller plugged into the port.
