@@ -118,9 +118,9 @@ namespace lotrpwcheck
             this.MaximizeBox = false;
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
 
-            baseImage = new Bitmap("Base.png");
-            caret = new Bitmap("caret.png");
-            glyphs = new Bitmap("glyphs.png");
+            baseImage = new Bitmap("Images/Base.png");
+            caret = new Bitmap("Images/caret.png");
+            glyphs = new Bitmap("Images/glyphs.png");
 
             passwordString = new char[48];
             for (int i=0; i<48; ++i)
