@@ -19,6 +19,7 @@ This is a tool for verifying whether a password for the game "J.R.R. Tolkien's T
   * STR and DEF in the game is computed based on level and equipment.
   * There's a checkbox "Enabled" for each character, indicating that there is something in the password which adds that character to your party.
   * Some choices for armor or weapon are "invalid" meaning the password will be rejected by the game; others are marked "corruption" meaning the password is acceptable but causes misbehavior in the game.
+  * In the same way the One Ring is always in your inventory Frodo is always in your party regardless of whether he is set through the password.
   
 * You use the keyboard to type passwords + arrow keys to navigate between characters, so it's a bit quicker as compared to the game.
   
