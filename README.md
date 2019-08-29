@@ -15,7 +15,7 @@ This is a tool for verifying whether a password for the game "J.R.R. Tolkien's T
   * Note: the One Ring is always in Frodo's inventory, regardless of whether you flag it as enabled through the password.
   
 * There's controls for each character's level, armor and weapons.
-  * You can modify the number field for the level, or use the drop downs to change level and equipment.
+  * You can modify the number field for the level, or use the drop downs to change equipment.
   * STR and DEF in the game is computed based on level and equipment.
   * There's a checkbox "Enabled" for each character, indicating that there is something in the password which adds that character to your party.
   * Some choices for armor or weapon are "invalid" meaning the password will be rejected by the game; others are marked "corruption" meaning the password is acceptable but causes misbehavior in the game.
