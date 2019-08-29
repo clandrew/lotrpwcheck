@@ -1,0 +1,1187 @@
+ Party info format
+ 
+ ...	L00	OldDagger	ClothCloak	
+ ..B	(invalid)
+ ..C	L00	OldDagger	ClothCloak
+ ..D	(invalid)
+ ..F	L00	OldDagger	ClothCloak
+ ..G	(invalid)
+ ..H	L00	OldDagger	ClothCloak
+ ..J	(invalid)
+ ..K	L00	OldDagger	ClothCloak
+ ..L	(invalid)
+ ..M	L00	OldDagger	ClothCloak
+ ..N	(invalid)
+ ..P	L00	OldDagger	ClothCloak
+ ..Q	(invalid)
+ ..R	L00	OldDagger	ClothCloak
+ ..S	(invalid)
+ ..T	L00	OldDagger	ClothCloak
+ ..V	L00	OldDagger	PlateMail
+ ..W	L00	Dagger		ClothCloak
+ ..X	L00	Dagger		PlateMail
+ ..Y	L00	BarrowDagger	ClothCloak
+ ..Z	L00	BarrowDagger	PlateMail
+ ..0	L00	TrollDagger	ClothCloak
+ ..1	L00	TrollDagger	PlateMail
+ ..2	L00	ElvishDagger	ClothCloak
+ ..3	L00	ElvishDagger	PlateMail
+ ..4	L00	Sting		ClothCloak
+ ..5	L00	Sting		PlateMail
+ ..6	L00	LightSword	ClothCloak
+ ..7	L00	LightSword	PlateMail
+ ..8	L00	Sword		ClothCloak
+ ..9	L00	Sword		PlateMail
+ 
+ .B.	L00	OldDagger	ClothCloak	
+ .BB	(invalid)
+ .BC	L00	OldDagger	ClothCloak
+ .BD	(invalid)
+ .BF	L00	OldDagger	ClothCloak
+ .BG	(invalid)
+ .BH	L00	OldDagger	ClothCloak
+ .BJ	(invalid)
+ .BK	L00	OldDagger	ClothCloak
+ .BL	(invalid)
+ .BM	L00	OldDagger	ClothCloak
+ .BN	(invalid)
+ .BP	L00	OldDagger	ClothCloak
+ .BQ	(invalid)
+ .BR	L00	OldDagger	ClothCloak
+ .BS	(invalid)
+ .BT	L20	OldDagger	ClothCloak
+ .BV	L20	OldDagger	PlateMail
+ .BW	L20	Dagger		ClothCloak
+ .BX	L20	Dagger		PlateMail
+ .BY	L20	BarrowDagger	ClothCloak
+ .BZ	L20	BarrowDagger	PlateMail
+ .B0	L20	TrollDagger	ClothCloak
+ .B1	L20	TrollDagger	PlateMail
+ .B2	L20	ElvishDagger	ClothCloak
+ .B3	L20	ElvishDagger	PlateMail
+ .B4	L20	Sting		ClothCloak
+ .B5	L20	Sting		PlateMail
+ .B6	L20	LightSword	ClothCloak
+ .B7	L20	LightSword	PlateMail
+ .B8	L20	Sword		ClothCloak
+ .B9	L20	Sword		PlateMail
+ 
+ .C.	L20	OldDagger	PlateMail
+ .CB	(invalid)
+ .CC	L20	OldDagger	PlateMail
+ .CD	(invalid)
+ .CF	L20	OldDagger	PlateMail
+ .CG	(invalid)
+ .CH	L20	OldDagger	PlateMail
+ .CJ	(invalid)
+ .CK	L20	OldDagger	PlateMail
+ .CL	(invalid)
+ .CM	L20	OldDagger	PlateMail
+ .CN	(invalid)
+ .CP	L20	OldDagger	PlateMail
+ .CQ	(invalid)
+ .CR	L20	OldDagger	PlateMail
+ .CS	(invalid)
+ 
+ .CT 	L40	OldDagger	ClothCloak
+ .CV 	L40	OldDagger	PlateMail
+ .CW 	L40	Dagger		ClothCloak
+ .CX 	L40	Dagger		PlateMail
+ .CY 	L40	BarrowDagger	ClothCloak
+ .CZ 	L40	BarrowDagger	PlateMail
+ .C0	L40	TrollDagger	ClothCloak
+ .C1	L40	TrollDagger	PlateMail
+ .C2	L40	ElvishDagger	ClothCloak
+ .C3	L40	ElvishDagger	PlateMail
+ .C4	L40	Sting		ClothCloak
+ .C5	L40	Sting		PlateMail
+ .C6	L40	LightSword	ClothCloak
+ .C7	L40	LightSword	PlateMail
+ .C8	L40	Sword		ClothCloak
+ .C9	L40	Sword		PlateMail
+ 
+ .D.	L20	OldDagger	PlateMail
+ .DB	(invalid)
+ .DC	L20	OldDagger	PlateMail
+ .DD	(invalid)
+ .DF	L20	OldDagger	PlateMail
+ .DG	(invalid)
+ .DH	L20	OldDagger	PlateMail
+ .DJ	(invalid)
+ .DK	L20	OldDagger	PlateMail
+ .DL	(invalid)
+ .DM	L20	OldDagger	PlateMail
+ .DN	(invalid)
+ .DP	L20	OldDagger	PlateMail
+ .DQ	(invalid)
+ .DR	L20	OldDagger	PlateMail
+ .DS	(invalid)
+ .DT	L60	OldDagger	ClothCloak
+ .DV	L60	OldDagger	PlateMail
+ .DW	L60	Dagger		ClothCloak
+ .DX	L60	Dagger		PlateMail
+ .DY	L60	BarrowDagger	ClothCloak
+ .DZ	L60	BarrowDagger	PlateMail
+ .D0	L60	TrollDagger	ClothCloak
+ .D1	L60	TrollDagger	PlateMail
+ .D2	L60	ElvishDagger	ClothCloak
+ .D3	L60	ElvishDagger	PlateMail
+ .D4	L60	Sting		ClothCloak
+ .D5	L60	Sting		PlateMail
+ .D6	L60	LightSword	ClothCloak
+ .D7	L60	LightSword	PlateMail
+ .D8	L60	Sword		ClothCloak
+ .D9	L60	Sword		PlateMail
+ 
+ .F.	L20	OldDagger	PlateMail
+ .FB	(invalid)
+ .FC	L20	OldDagger	PlateMail
+ .FD	(invalid)
+ .FF	L20	OldDagger	PlateMail
+ .FG	(invalid)
+ .FH	L20	OldDagger	PlateMail
+ .FJ	(invalid)
+ .FK	L20	OldDagger	PlateMail
+ .FL	(invalid)
+ .FM	L20	OldDagger	PlateMail
+ .FN	(invalid)
+ .FP	L20	OldDagger	PlateMail
+ .FQ	(invalid)
+ .FR	L20	OldDagger	PlateMail
+ .FS	(invalid)
+ .FT	L80	OldDagger	ClothCloak
+ .FV	L80	OldDagger	PlateMail
+ .FW	L80	Dagger		ClothCloak
+ .FX	L80	Dagger		PlateMail
+ .FY	L80	BarrowDagger	ClothCloak
+ .FZ	L80	BarrowDagger	PlateMail
+ .F0	L80	TrollDagger	ClothCloak
+ .F1	L80	TrollDagger	PlateMail
+ .F2	L80	ElvishDagger	ClothCloak
+ .F3	L80	ElvishDagger	PlateMail
+ .F4	L80	Sting		ClothCloak
+ .F5	L80	Sting		PlateMail
+ .F6	L80	LightSword	ClothCloak
+ .F7	L80	LightSword	PlateMail
+ .F8	L80	Sword		ClothCloak
+ .F9	L80	Sword		PlateMail
+ 
+ .G.	L20	OldDagger	PlateMail
+ .GB	(invalid)
+ .GC	L20	OldDagger	PlateMail
+ .GD	(invalid)
+ .GF	L20	OldDagger	PlateMail
+ .GG	(invalid)
+ .GH	L20	OldDagger	PlateMail
+ .GJ	(invalid)
+ .GK	L20	OldDagger	PlateMail
+ .GL	(invalid)
+ .GM	L20	OldDagger	PlateMail
+ .GN	(invalid)
+ .GP	L20	OldDagger	PlateMail
+ .GQ	(invalid)
+ .GR	L20	OldDagger	PlateMail
+ .GS	(invalid) 
+ .GT	(corruption)
+ .GV	(corruption)
+ .GW	(corruption)
+ .GX	(corruption)
+ .GY	(corruption)
+ .GZ	(corruption)
+ .G0	(corruption)
+ .G1	(corruption)
+ .G2	(corruption)
+ .G3	(corruption)
+ .G4	(corruption)
+ .G5	(corruption)
+ .G6	(corruption)
+ .G7	(corruption)
+ .G8	(corruption)
+ .G9	(corruption)
+ 
+ .H.	L00	OldDagger	ClothCloak	
+ .HB	(invalid)
+ .HC	L00	OldDagger	ClothCloak
+ .HD	(invalid)
+ .HF	L00	OldDagger	ClothCloak
+ .HG	(invalid)
+ .HH	L00	OldDagger	ClothCloak
+ .HJ	(invalid)
+ .HK	L00	OldDagger	ClothCloak
+ .HL	(invalid)
+ .HM	L00	OldDagger	ClothCloak
+ .HN	(invalid)
+ .HP	L00	OldDagger	ClothCloak
+ .HQ	(invalid)
+ .HR	L00	OldDagger	ClothCloak
+ .HS	(invalid)
+ .HT	(corruption)
+ .HV	(corruption)
+ .HW	(corruption)
+ .HX	(corruption)
+ .HY	(corruption)
+ .HZ	(corruption)
+ .H0	(corruption)
+ .H1	(corruption)
+ .H2	(corruption)
+ .H3	(corruption)
+ .H4	(corruption)
+ .H5	(corruption)
+ .H6	(corruption)
+ .H7	(corruption)
+ .H8	(corruption)
+ .H9	(corruption)
+ 
+ .J.	L00	OldDagger	ClothCloak	
+ .JB	(invalid)
+ .JC	L00	OldDagger	ClothCloak
+ .JD	(invalid)
+ .JF	L00	OldDagger	ClothCloak
+ .JG	(invalid)
+ .JH	L00	OldDagger	ClothCloak
+ .JJ	(invalid)
+ .JK	L00	OldDagger	ClothCloak
+ .JL	(invalid)
+ .JM	L00	OldDagger	ClothCloak
+ .JN	(invalid)
+ .JP	L00	OldDagger	ClothCloak
+ .JQ	(invalid)
+ .JR	L00	OldDagger	ClothCloak
+ .JS	(invalid)
+ .JT	(corruption)
+ .JV	(corruption)
+ .JW	(corruption)
+ .JX	(corruption)
+ .JY	(corruption)
+ .JZ	(corruption)
+ .J0	(corruption)
+ .J1	(corruption)
+ .J2	(corruption)
+ .J3	(corruption)
+ .J4	(corruption)
+ .J5	(corruption)
+ .J6	(corruption)
+ .J7	(corruption)
+ .J8	(corruption)
+ .J9	(corruption)
+ 
+ .K.	(invalid)
+ .KB	(invalid)
+ .KC	(invalid)
+ .KD	(invalid)
+ .KF	(invalid)
+ .KG	(invalid)
+ .KH	(invalid)
+ .KJ	(invalid)
+ .KK	(invalid)
+ .KL	(invalid)
+ .KM	(invalid)
+ .KN	(invalid)
+ .KP	(invalid)
+ .KQ	(invalid)
+ .KR	(invalid)
+ .KS	(invalid)
+ .KT	L00	OldDagger	PaddedArmor
+ .KV	L00	OldDagger	MithrilArmor
+ .KW	L00	Dagger		PaddedArmor
+ .KX	L00	Dagger		MithrilArmor
+ .KY	L00	BarrowDagger	PaddedArmor
+ .KZ	L00	BarrowDagger	MithrilArmor
+ .K0	L00	TrollDagger	PaddedArmor
+ .K1	L00	TrollDagger	MithrilArmor
+ .K2	L00	ElvishDagger	PaddedArmor
+ .K3	L00	ElvishDagger	MithrilArmor
+ .K4	L00	Sting		PaddedArmor
+ .K5	L00	Sting		MithrilArmor
+ .K6	L00	LightSword	PaddedArmor
+ .K7	L00	LightSword	MithrilArmor
+ .K8	L00	Sword		PaddedArmor
+ .K9	L00	Sword		MithrilArmor
+ 
+ .L.	(invalid)
+ .LB	(invalid)
+ .LC	(invalid)
+ .LD	(invalid)
+ .LF	(invalid)
+ .LG	(invalid)
+ .LH	(invalid)
+ .LJ	(invalid)
+ .LK	(invalid)
+ .LL	(invalid)
+ .LM	(invalid)
+ .LN	(invalid)
+ .LP	(invalid)
+ .LQ	(invalid)
+ .LR	(invalid)
+ .LS	(invalid)
+ .LT	L20	OldDagger	PaddedArmor
+ .LV	L20	OldDagger	MithrilArmor
+ .LW	L20	Dagger		PaddedArmor
+ .LX	L20	Dagger		MithrilArmor
+ .LY	L20	BarrowDagger	PaddedArmor
+ .LZ	L20	BarrowDagger	MithrilArmor
+ .L0	L20	TrollDagger	PaddedArmor
+ .L1	L20	TrollDagger	MithrilArmor
+ .L2	L20	ElvishDagger	PaddedArmor
+ .L3	L20	ElvishDagger	MithrilArmor
+ .L4	L20	Sting		PaddedArmor
+ .L5	L20	Sting		MithrilArmor
+ .L6	L20	LightSword	PaddedArmor
+ .L7	L20	LightSword	MithrilArmor
+ .L8	L20	Sword		PaddedArmor
+ .L9	L20	Sword		MithrilArmor
+ 
+ .M.	(invalid)
+ .MB	(invalid)
+ .MC	(invalid)
+ .MD	(invalid)
+ .MF	(invalid)
+ .MG	(invalid)
+ .MH	(invalid)
+ .MJ	(invalid)
+ .MK	(invalid)
+ .ML	(invalid)
+ .MM	(invalid)
+ .MN	(invalid)
+ .MP	(invalid)
+ .MQ	(invalid)
+ .MR	(invalid)
+ .MS	(invalid)
+ .MT	L40	OldDagger	PaddedArmor
+ .MV	L40	OldDagger	MithrilArmor
+ .MW	L40	Dagger		PaddedArmor
+ .MX	L40	Dagger		MithrilArmor
+ .MY	L40	BarrowDagger	PaddedArmor
+ .MZ	L40	BarrowDagger	MithrilArmor
+ .M0	L40	TrollDagger	PaddedArmor
+ .M1	L40	TrollDagger	MithrilArmor
+ .M2	L40	ElvishDagger	PaddedArmor
+ .M3	L40	ElvishDagger	MithrilArmor
+ .M4	L40	Sting		PaddedArmor
+ .M5	L40	Sting		MithrilArmor
+ .M6	L40	LightSword	PaddedArmor
+ .M7	L40	LightSword	MithrilArmor
+ .M8	L40	Sword		PaddedArmor
+ .M9	L40	Sword		MithrilArmor
+ 
+ .N.	(invalid)
+ .NB	(invalid)
+ .NC	(invalid)
+ .ND	(invalid)
+ .NF	(invalid)
+ .NG	(invalid)
+ .NH	(invalid)
+ .NJ	(invalid)
+ .NK	(invalid)
+ .NL	(invalid)
+ .NM	(invalid)
+ .NN	(invalid)
+ .NP	(invalid)
+ .NQ	(invalid)
+ .NR	(invalid)
+ .NS	(invalid)
+ .NT	L60	OldDagger	PaddedArmor
+ .NV	L60	OldDagger	MithrilArmor
+ .NW	L60	Dagger		PaddedArmor
+ .NX	L60	Dagger		MithrilArmor
+ .NY	L60	BarrowDagger	PaddedArmor
+ .NZ	L60	BarrowDagger	MithrilArmor
+ .N0	L60	TrollDagger	PaddedArmor
+ .N1	L60	TrollDagger	MithrilArmor
+ .N2	L60	ElvishDagger	PaddedArmor
+ .N3	L60	ElvishDagger	MithrilArmor
+ .N4	L60	Sting		PaddedArmor
+ .N5	L60	Sting		MithrilArmor
+ .N6	L60	LightSword	PaddedArmor
+ .N7	L60	LightSword	MithrilArmor
+ .N8	L60	Sword		PaddedArmor
+ .N9	L60	Sword		MithrilArmor
+ 
+ .P.	(invalid)
+ .PB	(invalid)
+ .PC	(invalid)
+ .PD	(invalid)
+ .PF	(invalid)
+ .PG	(invalid)
+ .PH	(invalid)
+ .PJ	(invalid)
+ .PK	(invalid)
+ .PL	(invalid)
+ .PM	(invalid)
+ .PN	(invalid)
+ .PP	(invalid)
+ .PQ	(invalid)
+ .PR	(invalid)
+ .PS	(invalid)
+ .PT	L80	OldDagger	PaddedArmor
+ .PV	L80	OldDagger	MithrilArmor
+ .PW	L80	Dagger		PaddedArmor
+ .PX	L80	Dagger		MithrilArmor
+ .PY	L80	BarrowDagger	PaddedArmor
+ .PZ	L80	BarrowDagger	MithrilArmor
+ .P0	L80	TrollDagger	PaddedArmor
+ .P1	L80	TrollDagger	MithrilArmor
+ .P2	L80	ElvishDagger	PaddedArmor
+ .P3	L80	ElvishDagger	MithrilArmor
+ .P4	L80	Sting		PaddedArmor
+ .P5	L80	Sting		MithrilArmor
+ .P6	L80	LightSword	PaddedArmor
+ .P7	L80	LightSword	MithrilArmor
+ .P8	L80	Sword		PaddedArmor
+ .P9	L80	Sword		MithrilArmor
+ 
+
+ .Q.	(invalid)
+ .QB	(invalid)
+ .QC	(invalid)
+ .QD	(invalid)
+ .QF	(invalid)
+ .QG	(invalid)
+ .QH	(invalid)
+ .QJ	(invalid)
+ .QK	(invalid)
+ .QL	(invalid)
+ .QM	(invalid)
+ .QN	(invalid)
+ .QP	(invalid)
+ .QQ	(invalid)
+ .QR	(invalid)
+ .QS	(invalid)
+ .QT	(corruption)
+ .QV	(corruption)
+ .QW	(corruption)
+ .QX	(corruption)
+ .QY	(corruption)
+ .QZ	(corruption)
+ .Q0	(corruption)
+ .Q1	(corruption)
+ .Q2	(corruption)
+ .Q3	(corruption)
+ .Q4	(corruption)
+ .Q5	(corruption)
+ .Q6	(corruption)
+ .Q7	(corruption)
+ .Q8	(corruption)
+ .Q9	(corruption)
+ 
+ .R.	(invalid)
+ .RB	(invalid)
+ .RC	(invalid)
+ .RD	(invalid)
+ .RF	(invalid)
+ .RG	(invalid)
+ .RH	(invalid)
+ .RJ	(invalid)
+ .RK	(invalid)
+ .RL	(invalid)
+ .RM	(invalid)
+ .RN	(invalid)
+ .RP	(invalid)
+ .RQ	(invalid)
+ .RR	(invalid)
+ .RS	(invalid)
+ .RT	(corruption)
+ .RV	(corruption)
+ .RW	(corruption)
+ .RX	(corruption)
+ .RY	(corruption)
+ .RZ	(corruption)
+ .R0	(corruption)
+ .R1	(corruption)
+ .R2	(corruption)
+ .R3	(corruption)
+ .R4	(corruption)
+ .R5	(corruption)
+ .R6	(corruption)
+ .R7	(corruption)
+ .R8	(corruption)
+ .R9	(corruption)
+ 
+ .S.	(invalid)
+ .SB	(invalid)
+ .SC	(invalid)
+ .SD	(invalid)
+ .SF	(invalid)
+ .SG	(invalid)
+ .SH	(invalid)
+ .SJ	(invalid)
+ .SK	(invalid)
+ .SL	(invalid)
+ .SM	(invalid)
+ .SN	(invalid)
+ .SP	(invalid)
+ .SQ	(invalid)
+ .SR	(invalid)
+ .SS	(invalid)
+ .ST	(corruption)
+ .SV	(corruption)
+ .SW	(corruption)
+ .SX	(corruption)
+ .SY	(corruption)
+ .SZ	(corruption)
+ .S0	(corruption)
+ .S1	(corruption)
+ .S2	(corruption)
+ .S3	(corruption)
+ .S4	(corruption)
+ .S5	(corruption)
+ .S6	(corruption)
+ .S7	(corruption)
+ .S8	(corruption)
+ .S9	(corruption)
+ 
+ .T.	(invalid)
+ .TB	(invalid)
+ .TC	(invalid)
+ .TD	(invalid)
+ .TF	(invalid)
+ .TG	(invalid)
+ .TH	(invalid)
+ .TJ	(invalid)
+ .TK	(invalid)
+ .TL	(invalid)
+ .TM	(invalid)
+ .TN	(invalid)
+ .TP	(invalid)
+ .TQ	(invalid)
+ .TR	(invalid)
+ .TS	(invalid)
+ .TT	L00	OldDagger	LeatherArmor
+ .TV	(corruption)
+ .TW	L00	Dagger		LeatherArmor
+ .TX	(corruption)
+ .TY	L00	BarrowDagger	LeatherArmor
+ .TZ	(corruption)
+ .T0	L00	TrollDagger	LeatherArmor	
+ .T1	(corruption)
+ .T2	L00	ElvishDagger	LeatherArmor	
+ .T3	(corruption)
+ .T4	L00	Sting		LeatherArmor	
+ .T5	(corruption)
+ .T6	L00	LightSword	LeatherArmor	
+ .T7	(corruption)
+ .T8	L00	Sword		LeatherArmor	
+ .T9	(corruption)
+  
+ .V.	(invalid)
+ .VB	(invalid)
+ .VC	(invalid)
+ .VD	(invalid)
+ .VF	(invalid)
+ .VG	(invalid)
+ .VH	(invalid)
+ .VJ	(invalid)
+ .VK	(invalid)
+ .VL	(invalid)
+ .VM	(invalid)
+ .VN	(invalid)
+ .VP	(invalid)
+ .VQ	(invalid)
+ .VR	(invalid)
+ .VS	(invalid)
+ .VT	L20	OldDagger	LeatherArmor
+ .VV	(corruption)
+ .VW	L20	Dagger		LeatherArmor
+ .VX	(corruption)
+ .VY	L20	BarrowDagger	LeatherArmor
+ .VZ	(corruption)
+ .V0	L20	TrollDagger	LeatherArmor	
+ .V1	(corruption)
+ .V2	L20	ElvishDagger	LeatherArmor	
+ .V3	(corruption)
+ .V4	L20	Sting		LeatherArmor	
+ .V5	(corruption)
+ .V6	L20	LightSword	LeatherArmor	
+ .V7	(corruption)
+ .V8	L20	Sword		LeatherArmor	
+ .V9	(corruption)
+  
+ .W.	(invalid)
+ .WB	(invalid)
+ .WC	(invalid)
+ .WD	(invalid)
+ .WF	(invalid)
+ .WG	(invalid)
+ .WH	(invalid)
+ .WJ	(invalid)
+ .WK	(invalid)
+ .WL	(invalid)
+ .WM	(invalid)
+ .WN	(invalid)
+ .WP	(invalid)
+ .WQ	(invalid)
+ .WR	(invalid)
+ .WS	(invalid)
+ .WT	L40	OldDagger	LeatherArmor
+ .WV	(corruption)
+ .WW	L40	Dagger		LeatherArmor
+ .WX	(corruption)
+ .WY	L40	BarrowDagger	LeatherArmor
+ .WZ	(corruption)
+ .W0	L40	TrollDagger	LeatherArmor	
+ .W1	(corruption)
+ .W2	L40	ElvishDagger	LeatherArmor	
+ .W3	(corruption)
+ .W4	L40	Sting		LeatherArmor	
+ .W5	(corruption)
+ .W6	L40	LightSword	LeatherArmor	
+ .W7	(corruption)
+ .W8	L40	Sword		LeatherArmor	
+ .W9	(corruption)
+  
+ .X.	(invalid)
+ .XB	(invalid)
+ .XC	(invalid)
+ .XD	(invalid)
+ .XF	(invalid)
+ .XG	(invalid)
+ .XH	(invalid)
+ .XJ	(invalid)
+ .XK	(invalid)
+ .XL	(invalid)
+ .XM	(invalid)
+ .XN	(invalid)
+ .XP	(invalid)
+ .XQ	(invalid)
+ .XR	(invalid)
+ .XS	(invalid)
+ .XT	L60	OldDagger	LeatherArmor
+ .XV	(corruption)
+ .XW	L60	Dagger		LeatherArmor
+ .XX	(corruption)
+ .XY	L60	BarrowDagger	LeatherArmor
+ .XZ	(corruption)
+ .X0	L60	TrollDagger	LeatherArmor	
+ .X1	(corruption)
+ .X2	L60	ElvishDagger	LeatherArmor	
+ .X3	(corruption)
+ .X4	L60	Sting		LeatherArmor	
+ .X5	(corruption)
+ .X6	L60	LightSword	LeatherArmor	
+ .X7	(corruption)
+ .X8	L60	Sword		LeatherArmor	
+ .X9	(corruption)
+  
+ .Y.	(invalid)
+ .YB	(invalid)
+ .YC	(invalid)
+ .YD	(invalid)
+ .YF	(invalid)
+ .YG	(invalid)
+ .YH	(invalid)
+ .YJ	(invalid)
+ .YK	(invalid)
+ .YL	(invalid)
+ .YM	(invalid)
+ .YN	(invalid)
+ .YP	(invalid)
+ .YQ	(invalid)
+ .YR	(invalid)
+ .YS	(invalid)
+ .YT	L80	OldDagger	LeatherArmor
+ .YV	(corruption)
+ .YW	L80	Dagger		LeatherArmor
+ .YX	(corruption)
+ .YY	L80	BarrowDagger	LeatherArmor
+ .YZ	(corruption)
+ .Y0	L80	TrollDagger	LeatherArmor	
+ .Y1	(corruption)
+ .Y2	L80	ElvishDagger	LeatherArmor	
+ .Y3	(corruption)
+ .Y4	L80	Sting		LeatherArmor	
+ .Y5	(corruption)
+ .Y6	L80	LightSword	LeatherArmor	
+ .Y7	(corruption)
+ .Y8	L80	Sword		LeatherArmor	
+ .Y9	(corruption)
+ 
+ .Z.	(invalid)
+ .ZB	(invalid)
+ .ZC	(invalid)
+ .ZD	(invalid)
+ .ZF	(invalid)
+ .ZG	(invalid)
+ .ZH	(invalid)
+ .ZJ	(invalid)
+ .ZK	(invalid)
+ .ZL	(invalid)
+ .ZM	(invalid)
+ .ZN	(invalid)
+ .ZP	(invalid)
+ .ZQ	(invalid)
+ .ZR	(invalid)
+ .ZS	(invalid)
+ .ZT	(corruption)
+ .ZV	(corruption)
+ .ZW	(corruption)
+ .ZX	(corruption)
+ .ZY	(corruption)
+ .ZZ	(corruption)
+ .Z0	(corruption)
+ .Z1	(corruption)
+ .Z2	(corruption)
+ .Z3	(corruption)
+ .Z4	(corruption)
+ .Z5	(corruption)
+ .Z6	(corruption)
+ .Z7	(corruption)
+ .Z8	(corruption)
+ .Z9	(corruption)
+ 
+ .0.	(invalid)
+ .0B	(invalid)
+ .0C	(invalid)
+ .0D	(invalid)
+ .0F	(invalid)
+ .0G	(invalid)
+ .0H	(invalid)
+ .0J	(invalid)
+ .0K	(invalid)
+ .0L	(invalid)
+ .0M	(invalid)
+ .0N	(invalid)
+ .0P	(invalid)
+ .0Q	(invalid)
+ .0R	(invalid)
+ .0S	(invalid)
+ .0T	(corruption)
+ .0V	(corruption)
+ .0W	(corruption)
+ .0X	(corruption)
+ .0Y	(corruption)
+ .0Z	(corruption)
+ .00	(corruption)
+ .01	(corruption)
+ .02	(corruption)
+ .03	(corruption)
+ .04	(corruption)
+ .05	(corruption)
+ .06	(corruption)
+ .07	(corruption)
+ .08	(corruption)
+ .09	(corruption)
+ 
+ .1.	(invalid)
+ .1B	(invalid)
+ .1C	(invalid)
+ .1D	(invalid)
+ .1F	(invalid)
+ .1G	(invalid)
+ .1H	(invalid)
+ .1J	(invalid)
+ .1K	(invalid)
+ .1L	(invalid)
+ .1M	(invalid)
+ .1N	(invalid)
+ .1P	(invalid)
+ .1Q	(invalid)
+ .1R	(invalid)
+ .1S	(invalid)
+ .1T	(corruption)
+ .1V	(corruption)
+ .1W	(corruption)
+ .1X	(corruption)
+ .1Y	(corruption)
+ .1Z	(corruption)
+ .10	(corruption)
+ .11	(corruption)
+ .12	(corruption)
+ .13	(corruption)
+ .14	(corruption)
+ .15	(corruption)
+ .16	(corruption)
+ .17	(corruption)
+ .18	(corruption)
+ .19	(corruption) 
+
+ .2.	(invalid)
+ .2B	(invalid)
+ .2C	(invalid)
+ .2D	(invalid)
+ .2F	(invalid)
+ .2G	(invalid)
+ .2H	(invalid)
+ .2J	(invalid)
+ .2K	(invalid)
+ .2L	(invalid)
+ .2M	(invalid)
+ .2N	(invalid)
+ .2P	(invalid)
+ .2Q	(invalid)
+ .2R	(invalid)
+ .2S	(invalid)
+ .2T	L00	OldDagger	ChainMail
+ .2V	(corruption)
+ .2W	L00	Dagger		ChainMail
+ .2X	(corruption)
+ .2Y	L00	BarrowDagger	ChainMail
+ .2Z	(corruption)
+ .20	L00	TrollDagger	ChainMail	
+ .21	(corruption)
+ .22	L00	ElvishDagger	ChainMail	
+ .23	(corruption)
+ .24	L00	Sting		ChainMail	
+ .25	(corruption)
+ .26	L00	LightSword	ChainMail	
+ .27	(corruption)
+ .28	L00	Sword		ChainMail	
+ .29	(corruption)
+  
+ .3.	(invalid)
+ .3B	(invalid)
+ .3C	(invalid)
+ .3D	(invalid)
+ .3F	(invalid)
+ .3G	(invalid)
+ .3H	(invalid)
+ .3J	(invalid)
+ .3K	(invalid)
+ .3L	(invalid)
+ .3M	(invalid)
+ .3N	(invalid)
+ .3P	(invalid)
+ .3Q	(invalid)
+ .3R	(invalid)
+ .3S	(invalid)
+ .3T	L20	OldDagger	ChainMail
+ .3V	(corruption)
+ .3W	L20	Dagger		ChainMail
+ .3X	(corruption)
+ .3Y	L20	BarrowDagger	ChainMail
+ .3Z	(corruption)
+ .30	L20	TrollDagger	ChainMail	
+ .31	(corruption)
+ .32	L20	ElvishDagger	ChainMail	
+ .33	(corruption)
+ .34	L20	Sting		ChainMail	
+ .35	(corruption)
+ .36	L20	LightSword	ChainMail	
+ .37	(corruption)
+ .38	L20	Sword		ChainMail	
+ .39	(corruption)
+  
+ .4.	(invalid)
+ .4B	(invalid)
+ .4C	(invalid)
+ .4D	(invalid)
+ .4F	(invalid)
+ .4G	(invalid)
+ .4H	(invalid)
+ .4J	(invalid)
+ .4K	(invalid)
+ .4L	(invalid)
+ .4M	(invalid)
+ .4N	(invalid)
+ .4P	(invalid)
+ .4Q	(invalid)
+ .4R	(invalid)
+ .4S	(invalid)
+ .4T	L40	OldDagger	ChainMail
+ .4V	(corruption)
+ .4W	L40	Dagger		ChainMail
+ .4X	(corruption)
+ .4Y	L40	BarrowDagger	ChainMail
+ .4Z	(corruption)
+ .40	L40	TrollDagger	ChainMail	
+ .41	(corruption)
+ .42	L40	ElvishDagger	ChainMail	
+ .43	(corruption)
+ .44	L40	Sting		ChainMail	
+ .45	(corruption)
+ .46	L40	LightSword	ChainMail	
+ .47	(corruption)
+ .48	L40	Sword		ChainMail	
+ .49	(corruption)
+  
+ .5.	(invalid)
+ .5B	(invalid)
+ .5C	(invalid)
+ .5D	(invalid)
+ .5F	(invalid)
+ .5G	(invalid)
+ .5H	(invalid)
+ .5J	(invalid)
+ .5K	(invalid)
+ .5L	(invalid)
+ .5M	(invalid)
+ .5N	(invalid)
+ .5P	(invalid)
+ .5Q	(invalid)
+ .5R	(invalid)
+ .5S	(invalid)
+ .5T	L60	OldDagger	ChainMail
+ .5V	(corruption)
+ .5W	L60	Dagger		ChainMail
+ .5X	(corruption)
+ .5Y	L60	BarrowDagger	ChainMail
+ .5Z	(corruption)
+ .50	L60	TrollDagger	ChainMail	
+ .51	(corruption)
+ .52	L60	ElvishDagger	ChainMail	
+ .53	(corruption)
+ .54	L60	Sting		ChainMail	
+ .55	(corruption)
+ .56	L60	LightSword	ChainMail	
+ .57	(corruption)
+ .58	L60	Sword		ChainMail	
+ .59	(corruption)
+  
+ .6.	(invalid)
+ .6B	(invalid)
+ .6C	(invalid)
+ .6D	(invalid)
+ .6F	(invalid)
+ .6G	(invalid)
+ .6H	(invalid)
+ .6J	(invalid)
+ .6K	(invalid)
+ .6L	(invalid)
+ .6M	(invalid)
+ .6N	(invalid)
+ .6P	(invalid)
+ .6Q	(invalid)
+ .6R	(invalid)
+ .6S	(invalid)
+ .6T	L80	OldDagger	ChainMail
+ .6V	(corruption)
+ .6W	L80	Dagger		ChainMail
+ .6X	(corruption)
+ .6Y	L80	BarrowDagger	ChainMail
+ .6Z	(corruption)
+ .60	L80	TrollDagger	ChainMail	
+ .61	(corruption)
+ .62	L80	ElvishDagger	ChainMail	
+ .63	(corruption)
+ .64	L80	Sting		ChainMail	
+ .65	(corruption)
+ .66	L80	LightSword	ChainMail	
+ .67	(corruption)
+ .68	L80	Sword		ChainMail	
+ .69	(corruption) 
+ 
+ .7.	(invalid)
+ .7B	(invalid)
+ .7C	(invalid)
+ .7D	(invalid)
+ .7F	(invalid)
+ .7G	(invalid)
+ .7H	(invalid)
+ .7J	(invalid)
+ .7K	(invalid)
+ .7L	(invalid)
+ .7M	(invalid)
+ .7N	(invalid)
+ .7P	(invalid)
+ .7Q	(invalid)
+ .7R	(invalid)
+ .7S	(invalid)
+ .7T	(corruption)
+ .7V	(corruption)
+ .7W	(corruption)
+ .7X	(corruption)
+ .7Y	(corruption)
+ .7Z	(corruption)
+ .70	(corruption)
+ .71	(corruption)
+ .72	(corruption)
+ .73	(corruption)
+ .74	(corruption)
+ .75	(corruption)
+ .76	(corruption)
+ .77	(corruption)
+ .78	(corruption)
+ .79	(corruption) 
+ 
+ .8.	(invalid)
+ .8B	(invalid)
+ .8C	(invalid)
+ .8D	(invalid)
+ .8F	(invalid)
+ .8G	(invalid)
+ .8H	(invalid)
+ .8J	(invalid)
+ .8K	(invalid)
+ .8L	(invalid)
+ .8M	(invalid)
+ .8N	(invalid)
+ .8P	(invalid)
+ .8Q	(invalid)
+ .8R	(invalid)
+ .8S	(invalid)
+ .8T	(corruption)
+ .8V	(corruption)
+ .8W	(corruption)
+ .8X	(corruption)
+ .8Y	(corruption)
+ .8Z	(corruption)
+ .80	(corruption)
+ .81	(corruption)
+ .82	(corruption)
+ .83	(corruption)
+ .84	(corruption)
+ .85	(corruption)
+ .86	(corruption)
+ .87	(corruption)
+ .88	(corruption)
+ .89	(corruption) 
+ 
+ .9.	(invalid)
+ .9B	(invalid)
+ .9C	(invalid)
+ .9D	(invalid)
+ .9F	(invalid)
+ .9G	(invalid)
+ .9H	(invalid)
+ .9J	(invalid)
+ .9K	(invalid)
+ .9L	(invalid)
+ .9M	(invalid)
+ .9N	(invalid)
+ .9P	(invalid)
+ .9Q	(invalid)
+ .9R	(invalid)
+ .9S	(invalid)
+ .9T	(corruption)
+ .9V	(corruption)
+ .9W	(corruption)
+ .9X	(corruption)
+ .9Y	(corruption)
+ .9Z	(corruption)
+ .90	(corruption)
+ .91	(corruption)
+ .92	(corruption)
+ .93	(corruption)
+ .94	(corruption)
+ .95	(corruption)
+ .96	(corruption)
+ .97	(corruption)
+ .98	(corruption)
+ .99	(corruption) 
+ 
+ B..	(corruption)
+ B.B	(invalid)
+ B.C	(corruption)
+ B.D	(invalid)
+ B.F	(corruption)
+ B.G	(invalid)
+ B.H	(corruption)
+ B.J	(invalid)
+ B.K	(corruption)
+ B.L	(invalid)
+ B.M	(corruption)
+ B.N	(invalid)
+ B.P	(corruption)
+ B.Q	(invalid)
+ B.R	(corruption)
+ B.S	(invalid)
+ B.T	L01	OldDagger	ClothCloak
+ B.V	L01	OldDagger	PlateMail
+ B.W	L01	Dagger		ClothCloak
+ B.X	L01	Dagger		PlateMail
+ B.Y	L01	BarrowDagger	ClothCloak
+ B.Z	L01	BarrowDagger	PlateMail
+ B.0	L01	TrollDagger	ClothCloak
+ B.1	L01	TrollDagger	PlateMail
+ B.2	L01	ElvishDagger	ClothCloak
+ B.3	L01	ElvishDagger	PlateMail
+ B.4	L01	Sting		ClothCloak
+ B.5	L01	Sting		PlateMail
+ B.6	L01	LightSword	ClothCloak
+ B.7	L01	LightSword	PlateMail
+ B.8	L01	Sword		ClothCloak
+ B.9	L01	Sword		PlateMail
+ 
+ 
+ B.T	L01	OldDagger	ClothCloak
+ C.T	L02	OldDagger	ClothCloak
+ D.T	L03	OldDagger	ClothCloak
+ F.T	L04	OldDagger	ClothCloak
+ G.T	L05	OldDagger	ClothCloak
+ H.T	L06	OldDagger	ClothCloak
+ J.T	L07	OldDagger	ClothCloak
+ K.T	L08	OldDagger	ClothCloak
+ L.T	L09	OldDagger	ClothCloak
+ M.T	(corruption)
+ ...
+ S.T	(corruption)
+ T.T	L10	OldDagger	ClothCloak
+ V.T	L11	OldDagger	ClothCloak
+ W.T	L12	OldDagger	ClothCloak
+ X.T	L13	OldDagger	ClothCloak
+ Y.T	L14	OldDagger	ClothCloak
+ Z.T	L15	OldDagger	ClothCloak
+ 0.T	L16	OldDagger	ClothCloak
+ 1.T	L17	OldDagger	ClothCloak
+ 2.T	L18	OldDagger	ClothCloak
+ 3.T	L19	OldDagger	ClothCloak
+ 4.T	(corruption)
+ ...
+ 9.T	(corruption)
+ 
+ 
+ 
+
+ ..T	L00	OldDagger	ClothCloak
+ ..V	L00	OldDagger	PlateMail
+ ..W	L00	Dagger		ClothCloak
+ ..X	L00	Dagger		PlateMail
+ ..Y	L00	BarrowDagger	ClothCloak
+ ..Z	L00	BarrowDagger	PlateMail
+ ..0	L00	TrollDagger	ClothCloak
+ ..1	L00	TrollDagger	PlateMail
+ ..2	L00	ElvishDagger	ClothCloak
+ ..3	L00	ElvishDagger	PlateMail
+ ..4	L00	Sting		ClothCloak
+ ..5	L00	Sting		PlateMail
+ ..6	L00	LightSword	ClothCloak
+ ..7	L00	LightSword	PlateMail
+ ..8	L00	Sword		ClothCloak
+ ..9	L00	Sword		PlateMail
+ .KT	L00	OldDagger	PaddedArmor
+ .KV	L00	OldDagger	MithrilArmor
+ .KW	L00	Dagger		PaddedArmor
+ .KX	L00	Dagger		MithrilArmor
+ .KY	L00	BarrowDagger	PaddedArmor
+ .KZ	L00	BarrowDagger	MithrilArmor
+ .K0	L00	TrollDagger	PaddedArmor
+ .K1	L00	TrollDagger	MithrilArmor
+ .K2	L00	ElvishDagger	PaddedArmor
+ .K3	L00	ElvishDagger	MithrilArmor
+ .K4	L00	Sting		PaddedArmor
+ .K5	L00	Sting		MithrilArmor
+ .K6	L00	LightSword	PaddedArmor
+ .K7	L00	LightSword	MithrilArmor
+ .K8	L00	Sword		PaddedArmor
+ .K9	L00	Sword		MithrilArmor 
+ .TT	L00	OldDagger	LeatherArmor
+ .TV	(corruption)
+ .TW	L00	Dagger		LeatherArmor
+ .TX	(corruption)
+ .TY	L00	BarrowDagger	LeatherArmor
+ .TZ	(corruption)
+ .T0	L00	TrollDagger	LeatherArmor	
+ .T1	(corruption)
+ .T2	L00	ElvishDagger	LeatherArmor	
+ .T3	(corruption)
+ .T4	L00	Sting		LeatherArmor	
+ .T5	(corruption)
+ .T6	L00	LightSword	LeatherArmor	
+ .T7	(corruption)
+ .T8	L00	Sword		LeatherArmor	
+ .T9	(corruption)
+ .2T	L00	OldDagger	ChainMail
+ .2V	(corruption)
+ .2W	L00	Dagger		ChainMail
+ .2X	(corruption)
+ .2Y	L00	BarrowDagger	ChainMail
+ .2Z	(corruption)
+ .20	L00	TrollDagger	ChainMail	
+ .21	(corruption)
+ .22	L00	ElvishDagger	ChainMail	
+ .23	(corruption)
+ .24	L00	Sting		ChainMail	
+ .25	(corruption)
+ .26	L00	LightSword	ChainMail	
+ .27	(corruption)
+ .28	L00	Sword		ChainMail	
+ .29	(corruption) 
