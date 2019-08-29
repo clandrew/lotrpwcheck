@@ -5,12 +5,19 @@ This is a tool for verifying whether a password for the game "J.R.R. Tolkien's T
 
 ## Notes
 * You can type whatever password you want, then click the "Fix Checksum" button to auto-insert a good checksum.
+
 * The combo box shows where in the game world the password will spawn you.
   * You can edit it, and the password is updated automatically.
-* The checkboxes show your current inventory.
+
+* The checkboxes with items show your current inventory.
   * You can check or uncheck the boxes to change the inventory, and the password is updated automatically.
   * The buttons "All Items" and "No Items" are there as a convenience to fill or clear your inventory.
   * Note: the One Ring is always in Frodo's inventory, regardless of whether you flag it as enabled through the password.
+  
+* There's controls for each character's level, armor and weapons.
+  * STR and DEF in the game is computed based on level and equipment.
+  * There's a checkbox "Enabled" for each character, indicating that there is something in the password which adds that character to your party.
+  * Some choices for armor or weapon are "invalid" meaning the password will be rejected by the game; others are marked "corruption" meaning the password is acceptable but causes misbehavior in the game.
   
 * You use the keyboard to type passwords + arrow keys to navigate between characters, so it's a bit quicker as compared to the game.
   
