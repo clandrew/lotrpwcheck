@@ -1,0 +1,302 @@
+Lord of the Rings SNES Password Format
+======================================
+
+This is an explanation of the formats of the password used in the game. 
+This game has a hugely long password (48 characters.)
+
+Each alphanumeric character is one of
+.BCDFGHJKLMNPQRSTVWXYZ0123456789
+
+That's a '.', the letters of the alphabet with no vowels plus the numbers 0 through 9. This gives 32 choices in total.
+
+The general layout of the password is: (where '.' represents an alphanumeric character)
+
+                                                         
+             Samwise   Merry           Frodo   Pippin    
+            [       ][       ]       [       ][       ]  
+             .  .  .  .  .  .         .  .  .  .  .  .   
+                                                         
+                                                         
+                                                         
+            Legolas   Aragorn          Gimli   Gandalf   
+            [       ][       ]       [       ][       ]  
+             .  .  .  .  .  .         .  .  .  .  .  .   
+                                                         
+                                                         
+Spawn location              keys              Checksum   
+            [ ][         and events          ][       ]  
+             .  .  .  .  .  .         .  .  .  .  .  .   
+                                                         
+                                                         
+                             Inventory                   
+            [                                         ]  
+             .  .  .  .  .  .         .  .  .  .  .  .   
+
+As shown above there's
+- 3 characters for each of the 8 people in the fellowship (Boromir isn't joinable)
+- 1 character for your spawn location
+- 8 characters representing keys and events
+- 3 characters for checksum
+- and a 12-character inventory code at the bottom labeled 'INVENTORY CODE' in the password input screen.
+
+Following goes into more detail for each of these.
+
+Password characters
+-------------------
+The alphanumeric password is a convenience (lol) for the user. Internally the game maps each character in a password to a number.
+The mapping is this
+
+Character | Value 
+------------------
+   .      |  0    
+   B      |  1    
+   C      |  2    
+   D      |  3    
+   F      |  4    
+   G      |  5    
+   H      |  6    
+   J      |  7    
+   K      |  8    
+   L      |  9    
+   M      |  10   
+   N      |  11   
+   P      |  12   
+   Q      |  13   
+   R      |  14   
+   S      |  15   
+   T      |  16   
+   V      |  17   
+   W      |  18   
+   X      |  19   
+   Y      |  20   
+   Z      |  21   
+   0      |  22   
+   1      |  23   
+   2      |  24   
+   3      |  25   
+   4      |  26   
+   5      |  27   
+   6      |  28   
+   7      |  29   
+   8      |  30   
+   9      |  31   
+
+
+People in the fellowship
+------------------------
+
+For each joinable person in the fellowship there's a three-character code that encodes their level and equipment.
+
+Firstly, if the three character code is all '.' (value zeroes), that character is not in your party. If any of the 
+codes are nonzero, they are in your party.
+
+The way in which the codes determine equipment is a bit convoluted and broken. The reason I say that is there are some 
+passwords that are accepted by the game but will either crash the game or cause corrruption while you're playing.
+The charts and things below describe valid passwords. 
+
+You can find situations (e.g., what if Code3 is less than 16?) where the password gets accepted, the level gets loaded
+and things appear okay but corruption happens when you go into the menu for example. I reverse engineered what level/items
+you get in *those* cases too, and they're accounted for in the source code of my password editor. I'm leaving them out of 
+this document so that these formulas stay neat and concise, because they don't follow the rules listed below.
+
+So anyway, each person in the fellowship gets a three-character code in the password. Call the three characters in the code 
+Code1, Code2, and Code3 in order.
+
+For example if the password contained 'B89' then Code1=1, Code2=30, Code3=31 referring to the chart above. So each of
+Code1, Code2 and Code3 is a number between 0 and 31 inclusive.
+
+Level is decided by the following:
+
+if (Code1 < 10)
+	Level = (Code2 % 8) * 20 + Code1
+else
+	Level = (Code2 % 8) * 20 + (Code1 % 16) + 10
+
+
+Armor is decided by the following:
+
+   PW char   |     Code2      | Armor                                                         
+ ---------------------------------------------------------------------------------------------
+ . through F |  0 through 4   | If Code3 is even, Cloth Cloak. If Code3 is odd, Plate Mail.   
+ K through P |  8 through 12  | If Code3 is even, Padded Armor. If Code3 is odd, Mithril Armor
+ T through Y |  16 through 20 | Leather Armor                                                  
+ 2 through 6 |  24 through 28 | Chain Mail                                                    
+
+
+Weapons are decided by the following:
+ 
+PW char| Code3 | Weapon        
+ ----------------------------  
+  T    |  16   | Old Dagger    
+  V    |  17   | Old Dagger    
+  W    |  18   | Dagger        
+  X    |  19   | Dagger        
+  Y    |  20   | Barrow Dagger  
+  Z    |  21   | Barrow Dagger  
+  0    |  22   | Troll Dagger  
+  1    |  23   | Troll Dagger  
+  2    |  24   | Elvish Dagger  
+  3    |  25   | Elvish Dagger  
+  4    |  26   | Sting         
+  5    |  27   | Sting         
+  6    |  28   | Light Sword   
+  7    |  29   | Light Sword   
+  8    |  30   | Sword         
+  9    |  31   | Sword         
+  
+Spawn Location
+--------------
+This is the place in the game world your party will be in after the password gets accepted.
+It's a 1-character code.
+
+PW char| Code | Location             
+--------------|------------          
+  .    |  0   | Hobbiton             
+  B    |  1   | Brandywine Bridge    
+  C    |  2   | Farmer Maggot        
+  D    |  3   | Ferry                
+  F    |  4   | Crickhollow          
+  G    |  5   | Tom Bombadil's House 
+  H    |  6   | Barrow Downs Stones  
+  J    |  7   | Crossroads           
+  K    |  8   | Rivendell            
+  L    |  9   | Moria entrance       
+  M    |  10  | Moria 1 (glitched)   
+  N    |  11  | Moria 2 (glitched)   
+
+For the last two Moria locations, the game will include those location codes in the passwords it provides to you when
+you're in Moria.
+
+However, it won't accept the passwords the next time you start the game :(
+
+Might want to keep a map of Moria, you definitely don't want to do it more than once if you can help it
+
+Keys and events
+---------------
+These control the state of various unlockable doors and questlines. I haven't reverse-engineered which bits control what specifically.
+
+Checksum
+--------
+The checksum exists to stop you from trying random passwords and having them get accepted by the game as a means of cheating the game.
+It's a way of making sure the only passwords accepted are ones the game has actually given to you, not ones you randomly made up yourself.
+
+However, the checksum is pretty easy to understand if you look at the various passwords it gives you. For example, you'll see that leveling up 
+or changing equipment only changes the first character. And using something in your inventory only changes the third character. And, you 
+know how the password characters translate to character codes and there are 32 of them.
+
+The first character is the 'party checksum':
+	partySum = the sum of the character codes of the first two lines of the password
+	checksumCode = remainder when partySum is divided by 32. (For example, if partySum is 33, the checksumCode is 1.)
+	
+The second character is the 'event checksum':
+	eventSum = the sum of the character codes in the "spawn location" and "keys and events" part of the password
+	checksumCode = remainder when eventSum is divided by 32
+
+The third character is the 'inventory checksum':
+	inventorySum = the sum of the character codes in the "inventory" part of the password
+	checksumCode = remainder when inventorySum is divided by 32
+	
+This gives you the first, second and third characters of the checksum in order. 
+
+I think they put the checksum in the middle of the password to obfuscate it a little bit.
+
+Inventory
+---------
+These character codes store your inventory state pretty compactly. 
+Each item corresponds to 1 bit within a byte. Not all the bits are used, which is why a full inventory's password code looks like "9S9S9S 9S9S9S" rather than all 9s.
+
+There are 12 inventory code characters in all, which I'm calling code 0 through 11.
+
+ Item                |Code #| Bit      
+-----------------------------------    
+ Tomb Key            |  0   | 0x1      
+ Moria Key           |  0   | 0x2      
+ Red Gateway Gem     |  0   | 0x4      
+ Elvish Book         |  0   | 0x8      
+ Magic Rock          |  0   | 0x10     
+                                       
+ Bottle              |  1   | 0x1      
+ Lost Amulet         |  1   | 0x2      
+ Maggot Note         |  1   | 0x4      
+ Scroll Of Floi      |  1   | 0x8      
+                                       
+ Gate Key            |  2   | 0x1      
+ Moria Key           |  2   | 0x2      
+ Yellow Gateway Gem  |  2   | 0x4      
+ Book Of The Ages    |  2   | 0x8      
+ Gold Piece          |  2   | 0x10     
+                                       
+ Jug Of Honey        |  3   | 0x1      
+ Lost Amulet         |  3   | 0x2      
+ Old Willow Note     |  3   | 0x4      
+ Scroll Of Oin       |  3   | 0x8      
+                                       
+ Tomb Key            |  4   | 0x1      
+ Moria Key           |  4   | 0x2      
+ Gateway Keystone    |  4   | 0x4      
+ Book Of Mazarbul    |  4   | 0x8      
+ Gold Pieces         |  4   | 0x10     
+                                       
+ Eye Glasses         |  5   | 0x1      
+ Lost Amulet         |  5   | 0x2      
+ Note From Gandalf   |  5   | 0x4      
+ Color Scoll         |  5   | 0x8      
+
+ Item                |Code #| Bit 
+----------------------------------
+ Tomb Key            |  6   | 0x1 
+ Moria Key           |  6   | 0x2 
+ Green Gateway Gem   |  6   | 0x4 
+ Bilbo Diary         |  6   | 0x8 
+ Gold Pieces         |  6   | 0x10
+                                  
+ Healing Moss        |  7   | 0x1 
+ Lost Amulet         |  7   | 0x2 
+ Letter To Elrond    |  7   | 0x4 
+ Keystone Scroll     |  7   | 0x8 
+                                  
+ Tomb Key            |  8   | 0x1 
+ Boat Oar            |  8   | 0x2 
+ Purple Gateway Gem  |  8   | 0x4 
+ Jeweled Ring        |  8   | 0x8 
+ Gold Pieces         |  8   | 0x10
+                                  
+ Athelas Major       |  9   | 0x1 
+ Lost Amulet         |  9   | 0x2 
+ Horn Of Boromir     |  9   | 0x4 
+ Long Bow            |  9   | 0x8 
+                                  
+ Key To Bree         |  10  | 0x1 
+ Healing Mushroom    |  10  | 0x2 
+ Violet Gateway Gem  |  10  | 0x4 
+ The Ring            |  10  | 0x8 
+ Athelas Minor       |  10  | 0x10
+                                  
+ Healing Fruit       |  11  | 0x1 
+ Lost Amulet         |  11  | 0x2 
+ Magic Fern          |  11  | 0x4 
+ Orb of Drexle       |  11  | 0x8 
+
+The inventory codes come from bitwise OR-ing the corresponding bits together for each inventory item you have. 
+
+For example, suppose you have the first tomb key and the red gateway gem. This is bit '0x1' and '0x4'. When you bitwise-OR these, you get '5'. 
+Code 5 corresponds to password code 'G', from the chart all the way at the top. So if those two are the only items you have, your inventory code in the password is 'G..... ......'.
+
+For another example, suppose all you have is the first tomb key and the Orb of Drexle. This is bit '0x1' of the first code, and '0x8' of the last. So if those were the
+only two items you have, your inventory code in the password is 'B..... .....K'.
+
+There's one special case- although there's a character code allocated to the One Ring, the ring is always in your inventory regardless of whether it's encoded in the password or not.
+
+Conclusion
+----------
+Hope you found this helpful.
+
+If you want more info, here's a related forum post on speedrun.com by FascinatedBox:
+https://www.speedrun.com/lotrsnes/thread/iq9sf
+
+If you want to use a password editor that manages these password details for you:
+https://github.com/clandrew/lotrpwcheck/
+
+More direct link to the Windows binary:
+https://github.com/clandrew/lotrpwcheck/releases/
+
