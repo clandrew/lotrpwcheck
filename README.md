@@ -3,6 +3,8 @@
 ## About
 This is a tool for verifying whether a password for the game "J.R.R. Tolkien's The Lord of the Rings: Volume 1" is valid or not. You can also edit passwords. This came about when I was playing the game and found that some of the passwords I had written down were correctly written down, but glitched. This program fell out of trying to understand the glitched parts more, do some reverse-engineering and ultimately work around them. I'm putting this online in case other people run into the same issues.
 
+For a blog post describing the password format, [see here](http://cml-a.com/content/2021/03/31/lord-of-the-rings-snes-password-format/).
+
 ## Notes
 * You can type whatever password you want, then click the "Fix Checksum" button to auto-insert a good checksum.
 
