@@ -147,7 +147,7 @@ $81/A3E8 A9 00       LDA #$00                A:00EF X:0002 Y:001C P:envMXdizC
 
 When you play the game you suspect that it rejects Moria 1 and Moria 2. This code proves it.
 
-* Ok so. Going from this- when you request a password, the game uses your 'furthest location code'. If you have been through Moria 1 (code M), your password will always have that glitched location code M. Even if you backtrack to the Moria Entrance (L). Even if you backtrack to the beginning of the game. This is a very serious problem. Fortunately the save state editor comes in handy for that situation :)
+* Ok so. Going from this- when you request a password, the game uses your 'furthest location code'. If you have been through Moria 1 (code M), your password will always have that glitched location code M. Even if you backtrack to the Moria Entrance (L). Even if you backtrack to the beginning of the game. This is a very serious problem. Fortunately the save state editor comes in handy for that!
 
 Preview:
 ![Example image](https://raw.githubusercontent.com/clandrew/lotrpwcheck/master/Images/Usage.gif "Example image.")
