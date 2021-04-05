@@ -87,7 +87,7 @@ $81/CC17 6B          RTL                     A:00EF X:0012 Y:0019 P:envmxdizc
 </p>
 </details>
 
-If the game is somehow hacked to get past that, there's another place where Moria 1 and 2 are locked out
+If the game is somehow hacked to get past that, the second is here
 
 
 
