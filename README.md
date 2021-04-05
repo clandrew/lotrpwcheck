@@ -5,6 +5,7 @@ This is a tool for verifying whether a password for the game "J.R.R. Tolkien's T
 
 I wrote a blog post describing the password format, [here](http://cml-a.com/content/2021/03/31/lord-of-the-rings-snes-password-format/).
 
+
 ## Notes
 * You can type whatever password you want, then click the "Fix Checksum" button to auto-insert a good checksum.
 
@@ -38,7 +39,15 @@ can [enter a bad password](https://www.gamespot.com/j-r-r-tolkiens-the-lord-of-t
 There are at least a couple layers of rejcting these codes.
 
 The first is here
-```
+
+
+
+
+<details>
+<summary>Code snippet</summary>
+<p>
+
+```asm
 // Function: ReadPasswordLocationCode()
 // Precondition: location code is stored at $81:039C
 // Postcondition: stores some location-specific information in 801CCB, 801CCD,	801CC9
@@ -75,10 +84,20 @@ $81/CC16 18          CLC                     A:00EF X:0012 Y:0019 P:envmxdizc
 $81/CC17 6B          RTL                     A:00EF X:0012 Y:0019 P:envmxdizc
 ```
 
+</p>
+</details>
+
 If the game is somehow hacked to get past that, there's another place where Moria 1 and 2 are locked out
-```
+
+
+
+<details>
+<summary>Code snippet</summary>
+<p>
+
+```asm
 Function: AreaLoadImpl2()
-Preconditions: Location codes have been written to 801CCB, 801CCD,	801CC9
+Preconditions: Location codes have been written to 801CCB, 801CCD 801CC9
 
 $81/A377 E2 30       SEP #$30                A:0091 X:0006 Y:0054 P:eNvmxdizc
 $81/A379 AF 0E 1D 80 LDA $801D0E[$80:1D0E]   A:0091 X:0006 Y:0054 P:eNvMXdizc
@@ -122,6 +141,9 @@ $81/A3E6 E2 20       SEP #$20                A:00EF X:0002 Y:001C P:envmXdizC
 $81/A3E8 A9 00       LDA #$00                A:00EF X:0002 Y:001C P:envMXdizC
 ... clipped for brevity
 ```
+
+</p>
+</details>
 
 When you play the game you suspect that it rejects Moria 1 and Moria 2. This code proves it.
 
