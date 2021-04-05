@@ -32,6 +32,8 @@ I wrote a blog post describing the password format, [here](http://cml-a.com/cont
 * If you enter an only-partially-valid password that includes some configuration for a character (e.g., the string is not all '.'), it permanently adds the character to your party until SNES reset. Even if the password is rejected. This leads to a well-known cheesy trick where you <details> <summary>Glitch spoiler</summary>
 can [enter a bad password](https://www.gamespot.com/j-r-r-tolkiens-the-lord-of-the-rings-volume-1/cheats/), press start and hear the "invalid password" noise, then delete it and start the game with all the Fellowship unlocked.
 </details>
+ 
+* The last two location codes, 'Moria 1 (code M)' and 'Moria 2 (code N)' are glitched. And when you request a password, the game uses your 'furthest location code'. This is a hazard because if you go to Moria 1 (code M), your password will always have that glitched location code M. Even if you backtrack to the Moria Entrance (L). Even if you backtrack to the beginning of the game. This is a very serious bug. Anyway, this save state editor comes in handy for that situation.
 
 Preview:
 ![Example image](https://raw.githubusercontent.com/clandrew/lotrpwcheck/master/Images/Usage.gif "Example image.")
