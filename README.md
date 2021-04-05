@@ -33,15 +33,14 @@ I wrote a blog post describing the password format, [here](http://cml-a.com/cont
 * If you enter an only-partially-valid password that includes some configuration for a character (e.g., the string is not all '.'), it permanently adds the character to your party until SNES reset. Even if the password is rejected. This leads to a well-known cheesy trick where you <details> <summary>Glitch spoiler</summary>
 can [enter a bad password](https://www.gamespot.com/j-r-r-tolkiens-the-lord-of-the-rings-volume-1/cheats/), press start and hear the "invalid password" noise, then delete it and start the game with all the Fellowship unlocked.
 </details>
+
+## Glitched Passwords
  
-* The last two location codes, 'Moria 1 (code M)' and 'Moria 2 (code N)' are glitched in that the game provides them to you but won't ever accept them. 
+The last two location codes, 'Moria 1 (code M)' and 'Moria 2 (code N)' are glitched in that the game provides them to you but won't ever accept them. 
 
 There are at least a couple layers of rejcting these codes.
 
 The first is here
-
-
-
 
 <details>
 <summary>Code snippet</summary>
@@ -88,8 +87,6 @@ $81/CC17 6B          RTL                     A:00EF X:0012 Y:0019 P:envmxdizc
 </details>
 
 If the game is somehow hacked to get past that, the second is here
-
-
 
 <details>
 <summary>Code snippet</summary>
@@ -147,7 +144,7 @@ $81/A3E8 A9 00       LDA #$00                A:00EF X:0002 Y:001C P:envMXdizC
 
 When you play the game you suspect that it rejects Moria 1 and Moria 2. This code proves it.
 
-* Ok so. Going from this- when you request a password, the game uses your 'furthest location code'. If you have been through Moria 1 (code M), your password will always have that glitched location code M. Even if you backtrack to the Moria Entrance (L). Even if you backtrack to the beginning of the game. This is a very serious problem. Fortunately the save state editor comes in handy for that!
+Ok so. Going from this- when you request a password, the game uses your 'furthest location code'. If you have been through Moria 1 (code M), your password will always have that glitched location code M. Even if you backtrack to the Moria Entrance (L). Even if you backtrack to the beginning of the game. This is a very serious problem. Fortunately the save state editor comes in handy for that!
 
 Preview:
 ![Example image](https://raw.githubusercontent.com/clandrew/lotrpwcheck/master/Images/Usage.gif "Example image.")
