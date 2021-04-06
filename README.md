@@ -12,7 +12,7 @@ The last two location codes, 'Moria 1 (code M)' and 'Moria 2 (code N)' are glitc
 
 If you're on console with no cheat device, you can use this program to fix your password to 'Moria entrance (code L)'. It's a bit of a hassle since you still need to go through Moria, but at least you can keep your levels, equipment, items, and doors that were unlocked stay unlocked.
 
-If you're on emulator or you have a Pro Action Replay device, you can fix the bug with the codes
+Alternatively if you're on emulator or you have a Pro Action Replay device, you can fix the bug with the codes
 ```
 81CBF10C
 81A3900C
