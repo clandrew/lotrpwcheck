@@ -698,7 +698,7 @@ $80/8EC1 20 2C 86    JSR $862C  [$80:862C]   A:0002 X:0000 Y:0000 P:envmxdizc
 $80/8EC4 20 F9 90    JSR $90F9  [$80:90F9]   A:0002 X:FFFE Y:0000 P:eNvmxdizc
 $80/8EC7 20 6C 90    JSR $906C  [$80:906C]   A:0000 X:FFFE Y:1D65 P:envmxdizc
 $80/8ECA 20 B3 90    JSR $90B3  [$80:90B3]   A:0000 X:3200 Y:1D73 P:envmxdizC
-$80/8ECD 20 35 94    JSR $9435  [$80:9435]   A:0000 X:0000 Y:1D76 P:envmxdizC	; 
+$80/8ECD 20 35 94    JSR $9435  [$80:9435]   A:0000 X:0000 Y:1D76 P:envmxdizC	; This is also called when loading levels in the world as usual.
 $80/8ED0 20 86 94    JSR $9486  [$80:9486]   A:FFFF X:0004 Y:1D84 P:envmxdizC
 $80/8ED3 8C C7 1C    STY $1CC7  [$80:1CC7]   A:FFFF X:A387 Y:1D84 P:envmxdizC
 $80/8ED6 20 0D 91    JSR $910D  [$80:910D]   A:FFFF X:A387 Y:1D84 P:envmxdizC
@@ -721,7 +721,7 @@ $80/8F00 20 3F F6    JSR $F63F  [$80:F63F]   A:FFFF X:0006 Y:0054 P:envmxdiZC	//
 $80/8F03 20 C8 8D    JSR $8DC8  [$80:8DC8]   A:000C X:00FF Y:0000 P:envmxdizc
 $80/8F06 20 CB 93    JSR $93CB  [$80:93CB]   A:0000 X:00FF Y:0000 P:envmxdiZc
 $80/8F09 20 BA 8D    JSR $8DBA  [$80:8DBA]   A:0006 X:0020 Y:0080 P:envmxdizC
-$80/8F0C 60          RTS                     A:0021 X:0020 Y:0080 P:envmxdizC
+$80/8F0C 60          RTS                     A:0021 X:0020 Y:0080 P:envmxdizC	// When loading (non-PW) level at least, returns up to $80/81AC
 
 // AreaLoadImpl()
 // Note: On successful level load, the music is already faded-out here.
@@ -850,6 +850,8 @@ $81/A46D 8F 72 03 80 STA $800372[$80:0372]   A:000C X:00FF Y:0000 P:envMXdizc
 AreaLoadImpl2_Done:
 $81/A471 C2 30       REP #$30                A:000C X:00FF Y:0000 P:envMXdizc
 $81/A473 6B          RTL                     A:000C X:00FF Y:0000 P:envmxdizc
+
+////////////////////////////////
 
 FadeOutMusicImpl()
 $80/980E DA          PHX                     A:0136 X:2000 Y:007E P:enVmxdizC

@@ -1,0 +1,722 @@
+Location code
+
+// ReadPasswordLocationCode()
+...
+
+// Postcondition: stores some location-specific information in 
+//	801CCB
+//	801CCD
+//	801CC9
+// For Crossroads(J) it writes		2A 01 10 02 90 00
+// For Rivendell(K) it writes		38 01 80 00 80 00
+// For MoriaEntrance(L) it writes 	EF 00 40 01 A0 00
+// For Moria1(M) it writes		51 00 40 00 B4 01
+// For Moria2(N) it writes		0C 00 50 00 80 00 
+
+// For MoriaEntrance, e.g.
+$81/CBFD BF 18 CC 81 LDA $81CC18,x[$81:CC2A] A:0012 X:0012 Y:0018 P:envmxdizc
+$81/CC01 8F CB 1C 80 STA $801CCB[$80:1CCB]   A:0140 X:0012 Y:0018 P:envmxdizc
+$81/CC05 BF 30 CC 81 LDA $81CC30,x[$81:CC42] A:0140 X:0012 Y:0018 P:envmxdizc
+$81/CC09 8F CD 1C 80 STA $801CCD[$80:1CCD]   A:00A0 X:0012 Y:0018 P:envmxdizc
+$81/CC0D BF 48 CC 81 LDA $81CC48,x[$81:CC5A] A:00A0 X:0012 Y:0018 P:envmxdizc
+$81/CC11 8F C9 1C 80 STA $801CC9[$80:1CC9]   A:00EF X:0012 Y:0018 P:envmxdizc
+
+
+Compare an organic level load versus a password one.
+Caution: passwords are 'cursed'.
+The place to bp here is $80/815B, the label of LoadLevelGeneral() after validating.
+Isolating the problem a bit: in the Moria 1 (M) case, we get stuck at LoadLevel() and never progress out of it.
+
+/////////////////////////////////////////
+
+This stack is shared by both ordinary level loading in-game and password loading.
+GeneralLoop()
+	LoadLevelGeneral() $80/81A0 
+		LoadLevel() $80/8E42
+			AreaLoadImpl() $80/F63F
+				AreaLoadImpl2() $81/A377
+		FadeInNewLevel() - $80/8A6B
+
+general- AreaLoadHelper called  5 times total in valid case.
+In invalid case, it is called repeatedly forever.
+
+
+/////////////////////////////////////////
+GeneralLoop()	; For both PW menu and gameplay
+
+GeneralLoopStart:
+$80/805E 20 1A FA    JSR $FA1A  [$80:FA1A]   A:0006 X:0002 Y:0002 P:envmxdizC
+$80/8061 20 E4 8D    JSR $8DE4  [$80:8DE4]   A:0000 X:0002 Y:0002 P:envmxdiZC
+$80/8064 20 A3 82    JSR $82A3  [$80:82A3]   A:0000 X:0002 Y:0002 P:envmxdiZC
+$80/8067 20 1F 81    JSR $811F  [$80:811F]   A:0080 X:0002 Y:0002 P:envmxdizC	; Call LoadLevelGeneral()
+$80/806A 20 07 E9    JSR $E907  [$80:E907]   A:0005 X:0020 Y:0000 P:envmxdizC
+$80/806D 20 C9 E9    JSR $E9C9  [$80:E9C9]   A:0000 X:0020 Y:0000 P:envmxdiZC
+$80/8070 20 D0 AF    JSR $AFD0  [$80:AFD0]   A:0000 X:0020 Y:0000 P:envmxdiZC
+$80/8073 20 29 C8    JSR $C829  [$80:C829]   A:0000 X:000A Y:0011 P:envmxdiZC
+$80/8076 20 6C DC    JSR $DC6C  [$80:DC6C]   A:00A5 X:0000 Y:FFFE P:eNvmxdizc
+$80/8079 AD 03 04    LDA $0403  [$80:0403]   A:0001 X:0002 Y:0011 P:envmxdiZC
+$80/807C D0 FB       BNE $FB    [$8079]      A:0000 X:0002 Y:0011 P:envmxdiZC
+$80/807E 20 6B 83    JSR $836B  [$80:836B]   A:0000 X:0002 Y:0011 P:envmxdiZC
+$80/8081 20 B5 D2    JSR $D2B5  [$80:D2B5]   A:FFF0 X:0002 Y:0011 P:eNvmxdizc
+$80/8084 20 3F D3    JSR $D33F  [$80:D33F]   A:0000 X:0000 Y:FFFE P:eNvmxdizC
+$80/8087 20 93 9C    JSR $9C93  [$80:9C93]   A:E004 X:0020 Y:0080 P:envmxdizC
+$80/808A 20 E7 D1    JSR $D1E7  [$80:D1E7]   A:0001 X:0020 Y:0080 P:envmxdizC
+$80/808D 20 DB F4    JSR $F4DB  [$80:F4DB]   A:8000 X:0020 Y:0080 P:eNvmxdizC
+$80/8090 A9 02 00    LDA #$0002              A:0001 X:0020 Y:0002 P:envmxdizc
+$80/8093 20 EE 80    JSR $80EE  [$80:80EE]   A:0002 X:0020 Y:0002 P:envmxdizc
+$80/8096 20 58 DC    JSR $DC58  [$80:DC58]   A:0000 X:0020 Y:0002 P:envmxdiZc
+$80/8099 20 FC 83    JSR $83FC  [$80:83FC]   A:0001 X:0002 Y:0011 P:envmxdiZC
+$80/809C 20 BA D2    JSR $D2BA  [$80:D2BA]   A:0000 X:0002 Y:0011 P:envmxdiZC
+$80/809F 20 3F D3    JSR $D33F  [$80:D33F]   A:0000 X:0002 Y:FFFE P:eNvmxdizC
+$80/80A2 20 35 8E    JSR $8E35  [$80:8E35]   A:E004 X:0020 Y:0080 P:envmxdizC
+$80/80A5 20 93 9C    JSR $9C93  [$80:9C93]   A:0000 X:0020 Y:0080 P:envmxdiZC
+$80/80A8 20 E7 D1    JSR $D1E7  [$80:D1E7]   A:0001 X:0020 Y:0080 P:envmxdizC
+$80/80AB 20 2C 86    JSR $862C  [$80:862C]   A:8000 X:0020 Y:0080 P:eNvmxdizC
+$80/80AE A9 04 00    LDA #$0004              A:3700 X:FFFE Y:0080 P:eNvmxdizc
+$80/80B1 8D 03 04    STA $0403  [$80:0403]   A:0004 X:FFFE Y:0080 P:envmxdizc
+$80/80B4 20 33 84    JSR $8433  [$80:8433]   A:0004 X:FFFE Y:0080 P:envmxdizc
+$80/80B7 20 2C CC    JSR $CC2C  [$80:CC2C]   A:0000 X:FFFE Y:0080 P:envmxdiZc
+$80/80BA 20 8F 9D    JSR $9D8F  [$80:9D8F]   A:0000 X:0004 Y:0008 P:envmxdizC
+$80/80BD 20 BF D2    JSR $D2BF  [$80:D2BF]   A:0000 X:0004 Y:0008 P:envmxdiZC
+$80/80C0 20 C6 81    JSR $81C6  [$80:81C6]   A:0000 X:0004 Y:FFFE P:eNvmxdizC
+
+TightLoop:
+$80/80C3 AD 03 04    LDA $0403  [$80:0403]   A:0001 X:FFFE Y:010A P:eNvmxdizc
+$80/80C6 D0 FB       BNE $FB    [$80C3]      A:0004 X:FFFE Y:010A P:envmxdizc
+
+$80/80C8 20 6A 84    JSR $846A  [$80:846A]   A:0000 X:FFFE Y:010A P:envmxdiZc	
+$80/80CB 20 3F D3    JSR $D33F  [$80:D33F]   A:0200 X:FFFE Y:010A P:envmxdizc
+$80/80CE 20 93 9C    JSR $9C93  [$80:9C93]   A:E004 X:0020 Y:0080 P:envmxdizC
+$80/80D1 20 E7 D1    JSR $D1E7  [$80:D1E7]   A:0001 X:0020 Y:0080 P:envmxdizC
+$80/80D4 20 5B 85    JSR $855B  [$80:855B]   A:8000 X:0020 Y:0080 P:eNvmxdizC
+$80/80D7 A9 06 00    LDA #$0006              A:0000 X:0002 Y:0002 P:envmxdiZC
+$80/80DA 8D 03 04    STA $0403  [$80:0403]   A:0006 X:0002 Y:0002 P:envmxdizC
+$80/80DD EE 66 03    INC $0366  [$80:0366]   A:0006 X:0002 Y:0002 P:envmxdizC
+$80/80E0 4C 5E 80    JMP $805E  [$80:805E]   A:0006 X:0002 Y:0002 P:envmxdizC	; goto GeneralLoopStart
+
+/////////////////////////////////////////
+
+LoadLevelGeneral() 
+$80/811F AD 05 04    LDA $0405  [$80:0405]   A:0080 X:0002 Y:0002 P:envmxdizC	; Get IsLevelLoading boolean
+$80/8122 89 01 00    BIT #$0001              A:0000 X:0002 Y:0002 P:envmxdiZC
+$80/8125 D0 34       BNE $34    [$815B]      A:0000 X:0002 Y:0002 P:envmxdiZC	; If IsLevelLoading==true, goto LevelIsLoading. Otherwise fall thru
+
+NoLevelisLoading:
+$80/8127 89 08 00    BIT #$0008              A:0000 X:0002 Y:0002 P:envmxdiZC
+$80/812A D0 08       BNE $08    [$8134]      A:0000 X:0002 Y:0002 P:envmxdiZC
+$80/812C 89 02 00    BIT #$0002              A:0000 X:0002 Y:0002 P:envmxdiZC
+$80/812F D0 04       BNE $04    [$8135]      A:0000 X:0002 Y:0002 P:envmxdiZC	; Check some other flags
+
+$80/8131 9C 05 04    STZ $0405  [$80:0405]   A:0000 X:0002 Y:0002 P:envmxdiZC
+$80/8134 60          RTS                     A:0000 X:0002 Y:0002 P:envmxdiZC
+
+LevelIsLoading:
+$80/815B AD 98 02    LDA $0298  [$80:0298]   A:0001 X:000A Y:000A P:envmxdizC	; Check diff here
+$80/815E 48          PHA                     A:0005 X:000A Y:000A P:envmxdizC
+$80/815F 29 FE FF    AND #$FFFE              A:0005 X:000A Y:000A P:envmxdizC
+$80/8162 09 04 00    ORA #$0004              A:0004 X:000A Y:000A P:envmxdizC
+$80/8165 8D 98 02    STA $0298  [$80:0298]   A:0004 X:000A Y:000A P:envmxdizC
+$80/8168 EE 01 04    INC $0401  [$80:0401]   A:0004 X:000A Y:000A P:envmxdizC
+$80/816B 20 EC 8A    JSR $8AEC  [$80:8AEC]   A:0004 X:000A Y:000A P:envmxdizC	; Fades out the screen
+$80/816E 20 D0 AF    JSR $AFD0  [$80:AFD0]   A:0080 X:000A Y:0000 P:eNvmxdizC
+$80/8171 AD 05 04    LDA $0405  [$80:0405]   A:0000 X:000A Y:0008 P:envmxdizC
+$80/8174 89 04 00    BIT #$0004              A:0001 X:000A Y:0008 P:envmxdizC
+$80/8177 F0 27       BEQ $27    [$81A0]      A:0001 X:000A Y:0008 P:envmxdiZC
+
+...
+$80/81A0 AD 74 03    LDA $0374  [$80:0374]   A:0021 X:0020 Y:0080 P:envmxdizC
+$80/81A3 29 F7 FF    AND #$FFF7              A:0021 X:0020 Y:0080 P:envmxdizC
+$80/81A6 8D 74 03    STA $0374  [$80:0374]   A:0021 X:0020 Y:0080 P:envmxdizC
+$80/81A9 20 42 8E    JSR $8E42  [$80:8E42]   A:0021 X:0020 Y:0080 P:envmxdizC	; Call LoadLevel(). This is executed once on area change
+$80/81AC AD 05 04    LDA $0405  [$80:0405]   A:0021 X:0020 Y:0080 P:envmxdizC
+$80/81AF 89 02 00    BIT #$0002              A:0001 X:0020 Y:0080 P:envmxdizC
+$80/81B2 D0 0B       BNE $0B    [$81BF]      A:0001 X:0020 Y:0080 P:envmxdiZC
+$80/81B4 20 6B 8A    JSR $8A6B  [$80:8A6B]   A:0001 X:0020 Y:0080 P:envmxdiZC	; Call FadeInNewLevel()
+$80/81B7 68          PLA                     A:000F X:0020 Y:0000 P:envmxdiZC
+$80/81B8 8D 98 02    STA $0298  [$80:0298]   A:0005 X:0020 Y:0000 P:envmxdizC
+$80/81BB 9C 05 04    STZ $0405  [$80:0405]   A:0005 X:0020 Y:0000 P:envmxdizC
+										; By the time this is executed, you are in the new level.
+$80/81BE 60          RTS                     A:0005 X:0020 Y:0000 P:envmxdizC	; Returns up to a weird place $80/806A for both pw and gameplay.
+
+/////////////////////////////////////////
+
+// FadeInNewLevel() - $80/8A6B
+
+$80/8A6B E2 20       SEP #$20                A:0001 X:0020 Y:0080 P:envmxdiZC
+$80/8A6D AD 00 04    LDA $0400  [$80:0400]   A:0001 X:0020 Y:0080 P:envMxdiZC
+$80/8A70 29 7F       AND #$7F                A:0080 X:0020 Y:0080 P:eNvMxdizC
+$80/8A72 8D 00 04    STA $0400  [$80:0400]   A:0000 X:0020 Y:0080 P:envMxdiZC
+$80/8A75 C2 20       REP #$20                A:0000 X:0020 Y:0080 P:envMxdiZC
+$80/8A77 AD 74 03    LDA $0374  [$80:0374]   A:0000 X:0020 Y:0080 P:envmxdiZC
+$80/8A7A 89 02 00    BIT #$0002              A:0000 X:0020 Y:0080 P:envmxdiZC
+$80/8A7D D0 21       BNE $21    [$8AA0]      A:0000 X:0020 Y:0080 P:envmxdiZC
+$80/8A7F 89 80 00    BIT #$0080              A:0000 X:0020 Y:0080 P:envmxdiZC
+$80/8A82 D0 3C       BNE $3C    [$8AC0]      A:0000 X:0020 Y:0080 P:envmxdiZC
+
+FadeInNewLevel_Loop:
+$80/8A84 20 0F 8A    JSR $8A0F  [$80:8A0F]   A:0000 X:0020 Y:0080 P:envmxdiZC
+$80/8A87 E2 20       SEP #$20                A:0083 X:0020 Y:0080 P:envmxdiZC
+$80/8A89 AD 00 04    LDA $0400  [$80:0400]   A:0083 X:0020 Y:0080 P:envMxdiZC
+$80/8A8C C9 0F       CMP #$0F                A:0000 X:0020 Y:0080 P:envMxdiZC
+$80/8A8E F0 0D       BEQ $0D    [$8A9D]      A:0000 X:0020 Y:0080 P:eNvMxdizc
+$80/8A90 C2 20       REP #$20                A:0000 X:0020 Y:0080 P:eNvMxdizc
+$80/8A92 A0 08 00    LDY #$0008              A:0000 X:0020 Y:0080 P:eNvmxdizc
+$80/8A95 20 29 8E    JSR $8E29  [$80:8E29]   A:0000 X:0020 Y:0008 P:envmxdizc
+$80/8A98 EE 00 04    INC $0400  [$80:0400]   A:0000 X:0020 Y:0000 P:envmxdizc
+$80/8A9B 80 E7       BRA $E7    [$8A84]      A:0000 X:0020 Y:0000 P:envmxdizc
+
+FadeInNewLevel_Loop_Done:
+$80/8A9D C2 20       REP #$20                A:000F X:0020 Y:0000 P:envMxdiZC
+$80/8A9F 60          RTS                     A:000F X:0020 Y:0000 P:envmxdiZC
+$80/81B7 68          PLA                     A:000F X:0020 Y:0000 P:envmxdiZC
+$80/81B8 8D 98 02    STA $0298  [$80:0298]   A:0005 X:0020 Y:0000 P:envmxdizC
+$80/81BB 9C 05 04    STZ $0405  [$80:0405]   A:0005 X:0020 Y:0000 P:envmxdizC
+$80/81BE 60          RTS                     A:0005 X:0020 Y:0000 P:envmxdizC
+
+
+/////////////////////////////////////////
+Function: LoadLevel()
+$80/8E42 E2 20       SEP #$20                A:0021 X:0020 Y:0080 P:envmxdizC
+$80/8E44 9C 0C 42    STZ $420C  [$80:420C]   A:0021 X:0020 Y:0080 P:envMxdizC
+$80/8E47 C2 20       REP #$20                A:0021 X:0020 Y:0080 P:envMxdizC
+
+$80/8E49 9C 5E 03    STZ $035E  [$80:035E]   A:0021 X:0020 Y:0080 P:envmxdizC	; Bunch of zeroes
+$80/8E4C 9C 55 04    STZ $0455  [$80:0455]   A:0021 X:0020 Y:0080 P:envmxdizC
+$80/8E4F 9C 59 04    STZ $0459  [$80:0459]   A:0021 X:0020 Y:0080 P:envmxdizC
+$80/8E52 9C 7F 04    STZ $047F  [$80:047F]   A:0021 X:0020 Y:0080 P:envmxdizC
+$80/8E55 9C 81 05    STZ $0581  [$80:0581]   A:0021 X:0020 Y:0080 P:envmxdizC
+$80/8E58 9C 01 04    STZ $0401  [$80:0401]   A:0021 X:0020 Y:0080 P:envmxdizC
+$80/8E5B 9C 45 04    STZ $0445  [$80:0445]   A:0021 X:0020 Y:0080 P:envmxdizC
+$80/8E5E 9C 47 04    STZ $0447  [$80:0447]   A:0021 X:0020 Y:0080 P:envmxdizC
+$80/8E61 9C 2B 04    STZ $042B  [$80:042B]   A:0021 X:0020 Y:0080 P:envmxdizC
+$80/8E64 9C 65 04    STZ $0465  [$80:0465]   A:0021 X:0020 Y:0080 P:envmxdizC
+$80/8E67 9C 67 04    STZ $0467  [$80:0467]   A:0021 X:0020 Y:0080 P:envmxdizC
+$80/8E6A 9C 6B 04    STZ $046B  [$80:046B]   A:0021 X:0020 Y:0080 P:envmxdizC
+$80/8E6D 9C 6D 04    STZ $046D  [$80:046D]   A:0021 X:0020 Y:0080 P:envmxdizC
+$80/8E70 9C 49 04    STZ $0449  [$80:0449]   A:0021 X:0020 Y:0080 P:envmxdizC
+$80/8E73 9C 4B 04    STZ $044B  [$80:044B]   A:0021 X:0020 Y:0080 P:envmxdizC
+$80/8E76 9C 4D 04    STZ $044D  [$80:044D]   A:0021 X:0020 Y:0080 P:envmxdizC
+$80/8E79 9C 4F 04    STZ $044F  [$80:044F]   A:0021 X:0020 Y:0080 P:envmxdizC
+$80/8E7C 9C 51 04    STZ $0451  [$80:0451]   A:0021 X:0020 Y:0080 P:envmxdizC
+$80/8E7F 9C 53 04    STZ $0453  [$80:0453]   A:0021 X:0020 Y:0080 P:envmxdizC
+$80/8E82 9C 43 04    STZ $0443  [$80:0443]   A:0021 X:0020 Y:0080 P:envmxdizC
+$80/8E85 9C 66 03    STZ $0366  [$80:0366]   A:0021 X:0020 Y:0080 P:envmxdizC
+
+$80/8E88 20 44 8A    JSR $8A44  [$80:8A44]   A:0021 X:0020 Y:0080 P:envmxdizC
+$80/8E8B 20 0D 8F    JSR $8F0D  [$80:8F0D]   A:0021 X:0020 Y:0080 P:envmxdizC
+$80/8E8E AD C5 1C    LDA $1CC5  [$80:1CC5]   A:0021 X:0020 Y:0080 P:envmxdizC
+$80/8E91 8D C3 1C    STA $1CC3  [$80:1CC3]   A:0021 X:0020 Y:0080 P:envmxdizC
+$80/8E94 AD C9 1C    LDA $1CC9  [$80:1CC9]   A:0021 X:0020 Y:0080 P:envmxdizC
+$80/8E97 8D C5 1C    STA $1CC5  [$80:1CC5]   A:0021 X:0020 Y:0080 P:envmxdizC
+$80/8E9A D0 03       BNE $03    [$8E9F]      A:0021 X:0020 Y:0080 P:envmxdizC
+
+NonSaneAreaLoadCode:
+$80/8E9C 20 4A C3    JSR $C34A  [$80:C34A]   A:0021 X:0020 Y:0080 P:envmxdizC
+
+SaneAreaLoadCode:
+$80/8E9F AD C5 1C    LDA $1CC5  [$80:1CC5]   A:0021 X:0020 Y:0080 P:envmxdizC	; Load the area code back again
+$80/8EA2 20 1B 8F    JSR $8F1B  [$80:8F1B]   A:0021 X:0020 Y:0080 P:envmxdizC	; Call ProcessAreaLoadCode0 some function that operates on it
+$80/8EA5 22 3A A3 81 JSL $81A33A[$81:A33A]   A:0021 X:0020 Y:0080 P:envmxdizC
+$80/8EA9 20 4D 8F    JSR $8F4D  [$80:8F4D]   A:0021 X:0020 Y:0080 P:envmxdizC
+$80/8EAC A2 00 60    LDX #$6000              A:0021 X:0020 Y:0080 P:envmxdizC
+$80/8EAF 20 CC 8F    JSR $8FCC  [$80:8FCC]   A:0021 X:0020 Y:0080 P:envmxdizC	; Takes a second. Fades out the music
+$80/8EB2 20 F7 8F    JSR $8FF7  [$80:8FF7]   A:0021 X:0020 Y:0080 P:envmxdizC
+$80/8EB5 20 3D 90    JSR $903D  [$80:903D]   A:0021 X:0020 Y:0080 P:envmxdizC
+$80/8EB8 AD EA 1C    LDA $1CEA  [$80:1CEA]   A:0021 X:0020 Y:0080 P:envmxdizC
+$80/8EBB 8D 82 03    STA $0382  [$80:0382]   A:0021 X:0020 Y:0080 P:envmxdizC
+$80/8EBE 20 CE 94    JSR $94CE  [$80:94CE]   A:0021 X:0020 Y:0080 P:envmxdizC
+$80/8EC1 20 2C 86    JSR $862C  [$80:862C]   A:0021 X:0020 Y:0080 P:envmxdizC
+$80/8EC4 20 F9 90    JSR $90F9  [$80:90F9]   A:0021 X:0020 Y:0080 P:envmxdizC
+$80/8EC7 20 6C 90    JSR $906C  [$80:906C]   A:0021 X:0020 Y:0080 P:envmxdizC
+$80/8ECA 20 B3 90    JSR $90B3  [$80:90B3]   A:0021 X:0020 Y:0080 P:envmxdizC
+$80/8ECD 20 35 94    JSR $9435  [$80:9435]   A:0021 X:0020 Y:0080 P:envmxdizC
+$80/8ED0 20 86 94    JSR $9486  [$80:9486]   A:0021 X:0020 Y:0080 P:envmxdizC
+$80/8ED3 8C C7 1C    STY $1CC7  [$80:1CC7]   A:0021 X:0020 Y:0080 P:envmxdizC
+$80/8ED6 20 0D 91    JSR $910D  [$80:910D]   A:0021 X:0020 Y:0080 P:envmxdizC
+$80/8ED9 20 23 91    JSR $9123  [$80:9123]   A:0021 X:0020 Y:0080 P:envmxdizC
+$80/8EDC 20 BE C7    JSR $C7BE  [$80:C7BE]   A:0021 X:0020 Y:0080 P:envmxdizC
+$80/8EDF 20 84 D2    JSR $D284  [$80:D284]   A:0021 X:0020 Y:0080 P:envmxdizC
+$80/8EE2 20 96 92    JSR $9296  [$80:9296]   A:0021 X:0020 Y:0080 P:envmxdizC
+$80/8EE5 20 56 91    JSR $9156  [$80:9156]   A:0021 X:0020 Y:0080 P:envmxdizC
+$80/8EE8 20 C6 91    JSR $91C6  [$80:91C6]   A:0021 X:0020 Y:0080 P:envmxdizC
+$80/8EEB 20 BC 9C    JSR $9CBC  [$80:9CBC]   A:0021 X:0020 Y:0080 P:envmxdizC
+$80/8EEE A9 10 00    LDA #$0010              A:0021 X:0020 Y:0080 P:envmxdizC
+$80/8EF1 AE A3 1C    LDX $1CA3  [$80:1CA3]   A:0021 X:0020 Y:0080 P:envmxdizC
+$80/8EF4 20 0E 98    JSR $980E  [$80:980E]   A:0021 X:0020 Y:0080 P:envmxdizC
+$80/8EF7 20 60 92    JSR $9260  [$80:9260]   A:0021 X:0020 Y:0080 P:envmxdizC
+$80/8EFA 20 D1 CB    JSR $CBD1  [$80:CBD1]   A:0021 X:0020 Y:0080 P:envmxdizC
+$80/8EFD 20 FA C9    JSR $C9FA  [$80:C9FA]   A:0021 X:0020 Y:0080 P:envmxdizC
+
+$80/8F00 20 3F F6    JSR $F63F  [$80:F63F]   A:0021 X:0020 Y:0080 P:envmxdizC	// Call AreaLoadImpl(). Last line here executed for Moria 1
+
+$80/8F03 20 C8 8D    JSR $8DC8  [$80:8DC8]   A:0021 X:0020 Y:0080 P:envmxdizC
+$80/8F06 20 CB 93    JSR $93CB  [$80:93CB]   A:0021 X:0020 Y:0080 P:envmxdizC
+$80/8F09 20 BA 8D    JSR $8DBA  [$80:8DBA]   A:0021 X:0020 Y:0080 P:envmxdizC
+$80/8F0C 60          RTS                     A:0021 X:0020 Y:0080 P:envmxdizC	// When loading (non-PW) level at least, returns up to $80/81AC
+
+/////////////////////////////////////////
+
+// Function: AreaLoadImpl()
+$80/F63F 9C DD 03    STZ $03DD  [$80:03DD]   A:FFFF X:0006 Y:0054 P:envmxdiZC	; 
+$80/F642 9C D1 03    STZ $03D1  [$80:03D1]   A:FFFF X:0006 Y:0054 P:envmxdiZC
+$80/F645 9C DB 03    STZ $03DB  [$80:03DB]   A:FFFF X:0006 Y:0054 P:envmxdiZC
+$80/F648 9C CF 03    STZ $03CF  [$80:03CF]   A:FFFF X:0006 Y:0054 P:envmxdiZC
+$80/F64B AD C5 1C    LDA $1CC5  [$80:1CC5]   A:FFFF X:0006 Y:0054 P:envmxdiZC
+$80/F64E C9 DB 00    CMP #$00DB              A:0051 X:0006 Y:0054 P:envmxdizC
+$80/F651 90 10       BCC $10    [$F663]      A:0051 X:0006 Y:0054 P:eNvmxdizc
+$80/F663 AD C3 1C    LDA $1CC3  [$80:1CC3]   A:0051 X:0006 Y:0054 P:eNvmxdizc
+$80/F666 D0 12       BNE $12    [$F67A]      A:00DF X:0006 Y:0054 P:envmxdizc
+$80/F67A AD 84 02    LDA $0284  [$80:0284]   A:00DF X:0006 Y:0054 P:envmxdizc
+$80/F67D 09 04 00    ORA #$0004              A:0004 X:0006 Y:0054 P:envmxdizc
+$80/F680 8D 84 02    STA $0284  [$80:0284]   A:0004 X:0006 Y:0054 P:envmxdizc
+$80/F683 AD C9 1C    LDA $1CC9  [$80:1CC9]   A:0004 X:0006 Y:0054 P:envmxdizc
+$80/F686 C9 CB 00    CMP #$00CB              A:0051 X:0006 Y:0054 P:envmxdizc
+$80/F689 B0 1D       BCS $1D    [$F6A8]      A:0051 X:0006 Y:0054 P:eNvmxdizc
+$80/F68B E2 30       SEP #$30                A:0051 X:0006 Y:0054 P:eNvmxdizc
+$80/F68D AD 41 04    LDA $0441  [$80:0441]   A:0051 X:0006 Y:0054 P:eNvMXdizc
+$80/F690 29 FD       AND #$FD                A:0017 X:0006 Y:0054 P:envMXdizc
+$80/F692 8D 2C 21    STA $212C  [$80:212C]   A:0015 X:0006 Y:0054 P:envMXdizc
+$80/F695 A9 02       LDA #$02                A:0015 X:0006 Y:0054 P:envMXdizc
+$80/F697 8D 2D 21    STA $212D  [$80:212D]   A:0002 X:0006 Y:0054 P:envMXdizc
+$80/F69A A9 02       LDA #$02                A:0002 X:0006 Y:0054 P:envMXdizc
+$80/F69C 8D 30 21    STA $2130  [$80:2130]   A:0002 X:0006 Y:0054 P:envMXdizc
+$80/F69F A9 91       LDA #$91                A:0002 X:0006 Y:0054 P:envMXdizc
+$80/F6A1 8D 31 21    STA $2131  [$80:2131]   A:0091 X:0006 Y:0054 P:eNvMXdizc
+$80/F6A4 C2 30       REP #$30                A:0091 X:0006 Y:0054 P:eNvMXdizc
+$80/F6A6 80 20       BRA $20    [$F6C8]      A:0091 X:0006 Y:0054 P:eNvmxdizc
+$80/F6C8 22 77 A3 81 JSL $81A377[$81:A377]   A:0091 X:0006 Y:0054 P:eNvmxdizc	; Call AreaLoadImpl2. Last line here executed for Moria 1
+$80/F6CC 60          RTS                     A:000C X:00FF Y:0000 P:envmxdizc
+
+////////////////////////////////////////////
+
+Function: AreaLoadHelper() - 801D0D
+Precondition: 	$8035 stores a function table.
+		Expects an argument pushed on the stack: Stack-4+$08 contains a function pointer table index. This index goes from 0 to 11 (0x0 to 0xB) inclusive.
+		
+Postcondition: Clear carry on exit, if valid operation 
+This function is run multiple times on valid password use.
+
+$81/8002 8B          PHB                     A:0002 X:0002 Y:001C P:envMXdizC	
+$81/8003 4B          PHK                     A:0002 X:0002 Y:001C P:envMXdizC	; push data bank register and stack pointer
+$81/8004 AB          PLB                     A:0002 X:0002 Y:001C P:envMXdizC
+$81/8005 08          PHP                     A:0002 X:0002 Y:001C P:eNvMXdizC
+$81/8006 0B          PHD                     A:0002 X:0002 Y:001C P:eNvMXdizC
+$81/8007 C2 30       REP #$30                A:0002 X:0002 Y:001C P:eNvMXdizC	; Enter 16-bit mode
+
+$81/8009 3B          TSC                     A:0002 X:0002 Y:001C P:eNvmxdizC	; Transfer stack pointer to (16-bit) acc
+$81/800A 5B          TCD                     A:01E9 X:0002 Y:001C P:envmxdizC	; Transfer (16-bit) acc to Direct register 
+
+										; Load an argument off the stack
+										
+										; Does not load from $7E0008.
+										; Because this op is influenced by direct register.
+										; If DP were 0000, sure LDA $08 would load from 7E0008.
+										; But DP is 1E9.
+										; If DP==1, then LDA $08 loads from 7E0009.
+										; If DP==100, then LDA $08 loads from 7E0108.
+										; So if DP==1E9, then LDA $08 loads from 7E01E9+08 = 7E01F1
+										
+$81/800B A5 08       LDA $08    [$00:01F1]   A:01E9 X:0002 Y:001C P:envmxdizC	; Load from 7E01F1
+										; Points to	{01F1, 	01F1, 	01F3,	01F1,	01ED}
+										; Contains 	{4, 	6, 	A4,	2,	3}
+$81/800D C9 0C 00    CMP #$000C              A:0006 X:0002 Y:001C P:envmxdizC
+$81/8010 B0 07       BCS $07    [$8019]      A:0006 X:0002 Y:001C P:eNvmxdizc	; Validity check. If >=0xC, goto InputTooHigh
+
+$81/8012 0A          ASL A                   A:0006 X:0002 Y:001C P:eNvmxdizc	; 
+$81/8013 AA          TAX                     A:000C X:0002 Y:001C P:envmxdizc	; 
+$81/8014 2B          PLD                     A:000C X:000C Y:001C P:envmxdizc
+$81/8015 28          PLP                     A:000C X:000C Y:001C P:envmxdiZc
+$81/8016 7C 35 80    JMP ($8035,x)[$81:8865] A:000C X:000C Y:001C P:eNvMXdizC	; Calls some entry in a function table
+										; Look at 818035 + x (e.g., if X == 2, 818037) to find the address of where to jump
+										; Valid addresses:
+										X	Address
+										0	83E0
+										2	8539
+										4	85B6
+										6	867D
+										8	8A5C
+										A	87FE
+										C	8865
+										E	88CD
+										10	891A
+										12	8984
+										14	89D1
+										16	8A1F
+										
+										D is 01E9
+										
+										
+										; {8, C, 2, 4, 6} for load MoriaEntrance. Same for Rivendell
+										
+										Function index 1: $81:8539	(MoriaEntrance 2)
+										Function index 4: $81:8A5C	(MoriaEntrance 0)
+										Function index 6: $81:8865	(MoriaEntrance 1)
+
+InputTooHigh:										
+$81/8019 A2 06 00    LDX #$0006              A:0006 X:0006 Y:0054 P:envmxdizC
+$81/801C E2 20       SEP #$20                A:0006 X:0006 Y:0054 P:envmxdizC
+$81/801E B5 01       LDA $01,x  [$00:01F0]   A:0006 X:0006 Y:0054 P:envMxdizC
+$81/8020 95 03       STA $03,x  [$00:01F2]   A:0006 X:0006 Y:0054 P:envMxdizC
+$81/8022 CA          DEX                     A:0006 X:0006 Y:0054 P:envMxdizC
+$81/8023 10 F9       BPL $F9    [$801E]      A:0006 X:0006 Y:0054 P:envMxdizC
+$81/8025 C2 20       REP #$20                A:0006 X:0006 Y:0054 P:envMxdizC
+$81/8027 3B          TSC                     A:0006 X:0006 Y:0054 P:envmxdizC
+$81/8028 18          CLC                     A:0006 X:0006 Y:0054 P:envmxdizC
+$81/8029 69 02 00    ADC #$0002              A:0006 X:0006 Y:0054 P:envmxdizC
+$81/802C 1B          TCS                     A:0006 X:0006 Y:0054 P:envmxdizC
+$81/802D A9 FF FF    LDA #$FFFF              A:0006 X:0006 Y:0054 P:envmxdizC
+$81/8030 2B          PLD                     A:0006 X:0006 Y:0054 P:envmxdizC	; Restore state
+$81/8031 28          PLP                     A:0006 X:0006 Y:0054 P:envmxdizC
+$81/8032 AB          PLB                     A:0006 X:0006 Y:0054 P:envmxdizC
+$81/8033 38          SEC                     A:0006 X:0006 Y:0054 P:envmxdizC
+$81/8034 6B          RTL                     A:0006 X:0006 Y:0054 P:envmxdizC	; Exit
+
+$81/8865 08          PHP                     A:000C X:000C Y:001C P:eNvMXdizC
+$81/8866 0B          PHD                     A:000C X:000C Y:001C P:eNvMXdizC
+$81/8867 C2 30       REP #$30                A:000C X:000C Y:001C P:eNvMXdizC
+$81/8869 3B          TSC                     A:000C X:000C Y:001C P:eNvmxdizC
+$81/886A 38          SEC                     A:01E9 X:000C Y:001C P:envmxdizC
+$81/886B E9 04 00    SBC #$0004              A:01E9 X:000C Y:001C P:envmxdizC
+$81/886E 1B          TCS                     A:01E5 X:000C Y:001C P:envmxdizC
+$81/886F 5B          TCD                     A:01E5 X:000C Y:001C P:envmxdizC
+$81/8870 A9 00 F8    LDA #$F800              A:01E5 X:000C Y:001C P:envmxdizC
+$81/8873 85 01       STA $01    [$00:01E6]   A:F800 X:000C Y:001C P:eNvmxdizC
+$81/8875 A9 7E 00    LDA #$007E              A:F800 X:000C Y:001C P:eNvmxdizC
+$81/8878 85 03       STA $03    [$00:01E8]   A:007E X:000C Y:001C P:envmxdizC
+$81/887A A2 04 00    LDX #$0004              A:007E X:000C Y:001C P:envmxdizC
+$81/887D A0 00 00    LDY #$0000              A:007E X:0004 Y:001C P:envmxdizC
+$81/8880 B7 01       LDA [$01],y[$7E:F800]   A:007E X:0004 Y:0000 P:envmxdiZC
+$81/8882 C5 0E       CMP $0E    [$00:01F3]   A:FFFF X:0004 Y:0000 P:eNvmxdizC
+$81/8884 F0 27       BEQ $27    [$88AD]      A:FFFF X:0004 Y:0000 P:eNvmxdizC
+$81/8886 A5 01       LDA $01    [$00:01E6]   A:FFFF X:0004 Y:0000 P:eNvmxdizC
+$81/8888 18          CLC                     A:F800 X:0004 Y:0000 P:eNvmxdizC
+$81/8889 69 40 00    ADC #$0040              A:F800 X:0004 Y:0000 P:eNvmxdizc
+$81/888C 85 01       STA $01    [$00:01E6]   A:F840 X:0004 Y:0000 P:eNvmxdizc
+$81/888E CA          DEX                     A:F840 X:0004 Y:0000 P:eNvmxdizc
+$81/888F D0 EF       BNE $EF    [$8880]      A:F840 X:0003 Y:0000 P:envmxdizc
+$81/8880 B7 01       LDA [$01],y[$7E:F840]   A:F840 X:0003 Y:0000 P:envmxdizc
+$81/8882 C5 0E       CMP $0E    [$00:01F3]   A:FFFF X:0003 Y:0000 P:eNvmxdizc
+$81/8884 F0 27       BEQ $27    [$88AD]      A:FFFF X:0003 Y:0000 P:eNvmxdizC
+$81/8886 A5 01       LDA $01    [$00:01E6]   A:FFFF X:0003 Y:0000 P:eNvmxdizC
+$81/8888 18          CLC                     A:F840 X:0003 Y:0000 P:eNvmxdizC
+$81/8889 69 40 00    ADC #$0040              A:F840 X:0003 Y:0000 P:eNvmxdizc
+$81/888C 85 01       STA $01    [$00:01E6]   A:F880 X:0003 Y:0000 P:eNvmxdizc
+$81/888E CA          DEX                     A:F880 X:0003 Y:0000 P:eNvmxdizc
+$81/888F D0 EF       BNE $EF    [$8880]      A:F880 X:0002 Y:0000 P:envmxdizc
+$81/8880 B7 01       LDA [$01],y[$7E:F880]   A:F880 X:0002 Y:0000 P:envmxdizc
+$81/8882 C5 0E       CMP $0E    [$00:01F3]   A:FFFF X:0002 Y:0000 P:eNvmxdizc
+$81/8884 F0 27       BEQ $27    [$88AD]      A:FFFF X:0002 Y:0000 P:eNvmxdizC
+$81/8886 A5 01       LDA $01    [$00:01E6]   A:FFFF X:0002 Y:0000 P:eNvmxdizC
+$81/8888 18          CLC                     A:F880 X:0002 Y:0000 P:eNvmxdizC
+$81/8889 69 40 00    ADC #$0040              A:F880 X:0002 Y:0000 P:eNvmxdizc
+$81/888C 85 01       STA $01    [$00:01E6]   A:F8C0 X:0002 Y:0000 P:eNvmxdizc
+$81/888E CA          DEX                     A:F8C0 X:0002 Y:0000 P:eNvmxdizc
+$81/888F D0 EF       BNE $EF    [$8880]      A:F8C0 X:0001 Y:0000 P:envmxdizc
+$81/8880 B7 01       LDA [$01],y[$7E:F8C0]   A:F8C0 X:0001 Y:0000 P:envmxdizc
+$81/8882 C5 0E       CMP $0E    [$00:01F3]   A:FFFF X:0001 Y:0000 P:eNvmxdizc
+$81/8884 F0 27       BEQ $27    [$88AD]      A:FFFF X:0001 Y:0000 P:eNvmxdizC
+$81/8886 A5 01       LDA $01    [$00:01E6]   A:FFFF X:0001 Y:0000 P:eNvmxdizC
+$81/8888 18          CLC                     A:F8C0 X:0001 Y:0000 P:eNvmxdizC
+$81/8889 69 40 00    ADC #$0040              A:F8C0 X:0001 Y:0000 P:eNvmxdizc
+$81/888C 85 01       STA $01    [$00:01E6]   A:F900 X:0001 Y:0000 P:eNvmxdizc
+$81/888E CA          DEX                     A:F900 X:0001 Y:0000 P:eNvmxdizc
+$81/888F D0 EF       BNE $EF    [$8880]      A:F900 X:0000 Y:0000 P:envmxdiZc
+$81/8891 A2 06 00    LDX #$0006              A:F900 X:0000 Y:0000 P:envmxdiZc
+$81/8894 E2 20       SEP #$20                A:F900 X:0006 Y:0000 P:envmxdizc
+$81/8896 B5 05       LDA $05,x  [$00:01F0]   A:F900 X:0006 Y:0000 P:envMxdizc
+$81/8898 95 09       STA $09,x  [$00:01F4]   A:F981 X:0006 Y:0000 P:eNvMxdizc
+$81/889A CA          DEX                     A:F981 X:0006 Y:0000 P:eNvMxdizc
+$81/889B 10 F9       BPL $F9    [$8896]      A:F981 X:0005 Y:0000 P:envMxdizc
+$81/8896 B5 05       LDA $05,x  [$00:01EF]   A:F981 X:0005 Y:0000 P:envMxdizc
+$81/8898 95 09       STA $09,x  [$00:01F3]   A:F9A3 X:0005 Y:0000 P:eNvMxdizc
+$81/889A CA          DEX                     A:F9A3 X:0005 Y:0000 P:eNvMxdizc
+$81/889B 10 F9       BPL $F9    [$8896]      A:F9A3 X:0004 Y:0000 P:envMxdizc
+$81/8896 B5 05       LDA $05,x  [$00:01EE]   A:F9A3 X:0004 Y:0000 P:envMxdizc
+$81/8898 95 09       STA $09,x  [$00:01F2]   A:F9F6 X:0004 Y:0000 P:eNvMxdizc
+$81/889A CA          DEX                     A:F9F6 X:0004 Y:0000 P:eNvMxdizc
+$81/889B 10 F9       BPL $F9    [$8896]      A:F9F6 X:0003 Y:0000 P:envMxdizc
+$81/8896 B5 05       LDA $05,x  [$00:01ED]   A:F9F6 X:0003 Y:0000 P:envMxdizc
+$81/8898 95 09       STA $09,x  [$00:01F1]   A:F980 X:0003 Y:0000 P:eNvMxdizc
+$81/889A CA          DEX                     A:F980 X:0003 Y:0000 P:eNvMxdizc
+$81/889B 10 F9       BPL $F9    [$8896]      A:F980 X:0002 Y:0000 P:envMxdizc
+$81/8896 B5 05       LDA $05,x  [$00:01EC]   A:F980 X:0002 Y:0000 P:envMxdizc
+$81/8898 95 09       STA $09,x  [$00:01F0]   A:F9B1 X:0002 Y:0000 P:eNvMxdizc
+$81/889A CA          DEX                     A:F9B1 X:0002 Y:0000 P:eNvMxdizc
+$81/889B 10 F9       BPL $F9    [$8896]      A:F9B1 X:0001 Y:0000 P:envMxdizc
+$81/8896 B5 05       LDA $05,x  [$00:01EB]   A:F9B1 X:0001 Y:0000 P:envMxdizc
+$81/8898 95 09       STA $09,x  [$00:01EF]   A:F900 X:0001 Y:0000 P:envMxdiZc
+$81/889A CA          DEX                     A:F900 X:0001 Y:0000 P:envMxdiZc
+$81/889B 10 F9       BPL $F9    [$8896]      A:F900 X:0000 Y:0000 P:envMxdiZc
+$81/8896 B5 05       LDA $05,x  [$00:01EA]   A:F900 X:0000 Y:0000 P:envMxdiZc
+$81/8898 95 09       STA $09,x  [$00:01EE]   A:F900 X:0000 Y:0000 P:envMxdiZc
+$81/889A CA          DEX                     A:F900 X:0000 Y:0000 P:envMxdiZc
+$81/889B 10 F9       BPL $F9    [$8896]      A:F900 X:FFFF Y:0000 P:eNvMxdizc
+$81/889D C2 20       REP #$20                A:F900 X:FFFF Y:0000 P:eNvMxdizc
+$81/889F 3B          TSC                     A:F900 X:FFFF Y:0000 P:eNvmxdizc
+$81/88A0 18          CLC                     A:01E5 X:FFFF Y:0000 P:envmxdizc
+$81/88A1 69 08 00    ADC #$0008              A:01E5 X:FFFF Y:0000 P:envmxdizc
+$81/88A4 1B          TCS                     A:01ED X:FFFF Y:0000 P:envmxdizc
+$81/88A5 A9 05 00    LDA #$0005              A:01ED X:FFFF Y:0000 P:envmxdizc
+$81/88A8 2B          PLD                     A:0005 X:FFFF Y:0000 P:envmxdizc
+$81/88A9 28          PLP                     A:0005 X:FFFF Y:0000 P:envmxdiZc
+$81/88AA AB          PLB                     A:0005 X:00FF Y:0000 P:eNvMXdizC
+$81/88AB 38          SEC                     A:0005 X:00FF Y:0000 P:eNvMXdizC	; Keep going?
+$81/88AC 6B          RTL                     A:0005 X:00FF Y:0000 P:eNvMXdizC
+
+AreaLoadHelper_OnLoadMoriaEntrace:
+$81/8A5C 08          PHP                     A:0008 X:0008 Y:007E P:eNvMXdizC
+$81/8A5D 0B          PHD                     A:0008 X:0008 Y:007E P:eNvMXdizC
+$81/8A5E C2 30       REP #$30                A:0008 X:0008 Y:007E P:eNvMXdizC
+$81/8A60 3B          TSC                     A:0008 X:0008 Y:007E P:eNvmxdizC
+$81/8A61 38          SEC                     A:01E9 X:0008 Y:007E P:envmxdizC
+$81/8A62 E9 06 00    SBC #$0006              A:01E9 X:0008 Y:007E P:envmxdizC
+$81/8A65 1B          TCS                     A:01E3 X:0008 Y:007E P:envmxdizC
+$81/8A66 5B          TCD                     A:01E3 X:0008 Y:007E P:envmxdizC
+$81/8A67 64 01       STZ $01    [$00:01E4]   A:01E3 X:0008 Y:007E P:envmxdizC
+$81/8A69 A5 01       LDA $01    [$00:01E4]   A:01E3 X:0008 Y:007E P:envmxdizC
+$81/8A6B 0A          ASL A                   A:0000 X:0008 Y:007E P:envmxdiZC
+$81/8A6C A8          TAY                     A:0000 X:0008 Y:007E P:envmxdiZc
+$81/8A6D B9 F1 90    LDA $90F1,y[$81:90F1]   A:0000 X:0008 Y:0000 P:envmxdiZc
+$81/8A70 85 03       STA $03    [$00:01E6]   A:F800 X:0008 Y:0000 P:eNvmxdizc
+$81/8A72 A9 7E 00    LDA #$007E              A:F800 X:0008 Y:0000 P:eNvmxdizc
+$81/8A75 85 05       STA $05    [$00:01E8]   A:007E X:0008 Y:0000 P:envmxdizc
+$81/8A77 A0 00 00    LDY #$0000              A:007E X:0008 Y:0000 P:envmxdizc
+$81/8A7A B7 03       LDA [$03],y[$7E:F800]   A:007E X:0008 Y:0000 P:envmxdiZc
+$81/8A7C C5 12       CMP $12    [$00:01F5]   A:0002 X:0008 Y:0000 P:envmxdizc
+$81/8A7E F0 0F       BEQ $0F    [$8A8F]      A:0002 X:0008 Y:0000 P:envmxdiZC
+$81/8A8F A5 10       LDA $10    [$00:01F3]   A:0002 X:0008 Y:0000 P:envmxdiZC
+$81/8A91 C9 FF FF    CMP #$FFFF              A:0100 X:0008 Y:0000 P:envmxdizC
+$81/8A94 D0 11       BNE $11    [$8AA7]      A:0100 X:0008 Y:0000 P:envmxdizc
+$81/8AA7 A0 12 00    LDY #$0012              A:0100 X:0008 Y:0000 P:envmxdizc
+$81/8AAA 97 03       STA [$03],y[$7E:F812]   A:0100 X:0008 Y:0012 P:envmxdizc
+$81/8AAC A0 10 00    LDY #$0010              A:0100 X:0008 Y:0012 P:envmxdizc
+$81/8AAF A9 01 00    LDA #$0001              A:0100 X:0008 Y:0010 P:envmxdizc
+$81/8AB2 97 03       STA [$03],y[$7E:F810]   A:0001 X:0008 Y:0010 P:envmxdizc
+$81/8AB4 A9 00 00    LDA #$0000              A:0001 X:0008 Y:0010 P:envmxdizc
+$81/8AB7 A8          TAY                     A:0000 X:0008 Y:0010 P:envmxdiZc
+$81/8AB8 A2 06 00    LDX #$0006              A:0000 X:0008 Y:0000 P:envmxdiZc
+$81/8ABB E2 20       SEP #$20                A:0000 X:0006 Y:0000 P:envmxdizc
+$81/8ABD B5 07       LDA $07,x  [$00:01F0]   A:0000 X:0006 Y:0000 P:envMxdizc
+$81/8ABF 95 0D       STA $0D,x  [$00:01F6]   A:0081 X:0006 Y:0000 P:eNvMxdizc
+$81/8AC1 CA          DEX                     A:0081 X:0006 Y:0000 P:eNvMxdizc
+$81/8AC2 10 F9       BPL $F9    [$8ABD]      A:0081 X:0005 Y:0000 P:envMxdizc
+$81/8ABD B5 07       LDA $07,x  [$00:01EF]   A:0081 X:0005 Y:0000 P:envMxdizc
+$81/8ABF 95 0D       STA $0D,x  [$00:01F5]   A:00A3 X:0005 Y:0000 P:eNvMxdizc
+$81/8AC1 CA          DEX                     A:00A3 X:0005 Y:0000 P:eNvMxdizc
+$81/8AC2 10 F9       BPL $F9    [$8ABD]      A:00A3 X:0004 Y:0000 P:envMxdizc
+$81/8ABD B5 07       LDA $07,x  [$00:01EE]   A:00A3 X:0004 Y:0000 P:envMxdizc
+$81/8ABF 95 0D       STA $0D,x  [$00:01F4]   A:0073 X:0004 Y:0000 P:envMxdizc
+$81/8AC1 CA          DEX                     A:0073 X:0004 Y:0000 P:envMxdizc
+$81/8AC2 10 F9       BPL $F9    [$8ABD]      A:0073 X:0003 Y:0000 P:envMxdizc
+$81/8ABD B5 07       LDA $07,x  [$00:01ED]   A:0073 X:0003 Y:0000 P:envMxdizc
+$81/8ABF 95 0D       STA $0D,x  [$00:01F3]   A:0080 X:0003 Y:0000 P:eNvMxdizc
+$81/8AC1 CA          DEX                     A:0080 X:0003 Y:0000 P:eNvMxdizc
+$81/8AC2 10 F9       BPL $F9    [$8ABD]      A:0080 X:0002 Y:0000 P:envMxdizc
+$81/8ABD B5 07       LDA $07,x  [$00:01EC]   A:0080 X:0002 Y:0000 P:envMxdizc
+$81/8ABF 95 0D       STA $0D,x  [$00:01F2]   A:00B1 X:0002 Y:0000 P:eNvMxdizc
+$81/8AC1 CA          DEX                     A:00B1 X:0002 Y:0000 P:eNvMxdizc
+$81/8AC2 10 F9       BPL $F9    [$8ABD]      A:00B1 X:0001 Y:0000 P:envMxdizc
+$81/8ABD B5 07       LDA $07,x  [$00:01EB]   A:00B1 X:0001 Y:0000 P:envMxdizc
+$81/8ABF 95 0D       STA $0D,x  [$00:01F1]   A:0000 X:0001 Y:0000 P:envMxdiZc
+$81/8AC1 CA          DEX                     A:0000 X:0001 Y:0000 P:envMxdiZc
+$81/8AC2 10 F9       BPL $F9    [$8ABD]      A:0000 X:0000 Y:0000 P:envMxdiZc
+$81/8ABD B5 07       LDA $07,x  [$00:01EA]   A:0000 X:0000 Y:0000 P:envMxdiZc
+$81/8ABF 95 0D       STA $0D,x  [$00:01F0]   A:0000 X:0000 Y:0000 P:envMxdiZc
+$81/8AC1 CA          DEX                     A:0000 X:0000 Y:0000 P:envMxdiZc
+$81/8AC2 10 F9       BPL $F9    [$8ABD]      A:0000 X:FFFF Y:0000 P:eNvMxdizc
+$81/8AC4 C2 20       REP #$20                A:0000 X:FFFF Y:0000 P:eNvMxdizc
+$81/8AC6 3B          TSC                     A:0000 X:FFFF Y:0000 P:eNvmxdizc
+$81/8AC7 18          CLC                     A:01E3 X:FFFF Y:0000 P:envmxdizc
+$81/8AC8 69 0C 00    ADC #$000C              A:01E3 X:FFFF Y:0000 P:envmxdizc
+$81/8ACB 1B          TCS                     A:01EF X:FFFF Y:0000 P:envmxdizc
+$81/8ACC 98          TYA                     A:01EF X:FFFF Y:0000 P:envmxdizc
+$81/8ACD D0 05       BNE $05    [$8AD4]      A:0000 X:FFFF Y:0000 P:envmxdiZc
+$81/8ACF 2B          PLD                     A:0000 X:FFFF Y:0000 P:envmxdiZc
+$81/8AD0 28          PLP                     A:0000 X:FFFF Y:0000 P:envmxdiZc	; Puts us back in 8 bit mode, too
+$81/8AD1 AB          PLB                     A:0000 X:00FF Y:0000 P:eNvMXdizC
+$81/8AD2 18          CLC                     A:0000 X:00FF Y:0000 P:eNvMXdizC	; Important
+$81/8AD3 6B          RTL                     A:0000 X:00FF Y:0000 P:eNvMXdizc
+
+/////////////////////////////////////////
+Function: $81:A33A
+$81/A33A E2 30       SEP #$30                A:0000 X:00FF Y:0000 P:eNvmxdizc
+$81/A33C AF 0E 1D 80 LDA $801D0E[$80:1D0E]   A:0000 X:00FF Y:0000 P:eNvMXdizc
+$81/A340 CF 72 03 80 CMP $800372[$80:0372]   A:0000 X:00FF Y:0000 P:eNvMXdizc
+$81/A344 F0 2E       BEQ $2E    [$A374]      A:0000 X:00FF Y:0000 P:eNvMXdizc
+$81/A346 AF 72 03 80 LDA $800372[$80:0372]   A:0000 X:00FF Y:0000 P:eNvMXdizc
+$81/A34A 30 28       BMI $28    [$A374]      A:0000 X:00FF Y:0000 P:eNvMXdizc
+$81/A34C C2 20       REP #$20                A:0000 X:00FF Y:0000 P:eNvMXdizc
+$81/A34E AF C3 1C 80 LDA $801CC3[$80:1CC3]   A:0000 X:00FF Y:0000 P:eNvmXdizc
+$81/A352 C9 EF 00    CMP #$00EF              A:0000 X:00FF Y:0000 P:eNvmXdizc
+$81/A355 F0 09       BEQ $09    [$A360]      A:0000 X:00FF Y:0000 P:eNvmXdizc
+$81/A357 AF C5 1C 80 LDA $801CC5[$80:1CC5]   A:0000 X:00FF Y:0000 P:eNvmXdizc
+$81/A35B C9 54 00    CMP #$0054              A:0000 X:00FF Y:0000 P:eNvmXdizc
+$81/A35E 90 14       BCC $14    [$A374]      A:0000 X:00FF Y:0000 P:eNvmXdizc
+$81/A360 E2 20       SEP #$20                A:0000 X:00FF Y:0000 P:eNvmXdizc
+$81/A362 A9 00       LDA #$00                A:0000 X:00FF Y:0000 P:eNvMXdizc
+$81/A364 48          PHA                     A:0000 X:00FF Y:0000 P:eNvMXdizc
+$81/A365 AF 72 03 80 LDA $800372[$80:0372]   A:0000 X:00FF Y:0000 P:eNvMXdizc
+$81/A369 48          PHA                     A:0000 X:00FF Y:0000 P:eNvMXdizc
+$81/A36A F4 00 01    PEA $0100               A:0000 X:00FF Y:0000 P:eNvMXdizc
+$81/A36D F4 04 00    PEA $0004               A:0000 X:00FF Y:0000 P:eNvMXdizc	; Push AreaLoadHelper's argument- use function table entry 4.
+$81/A370 22 02 80 81 JSL $818002[$81:8002]   A:0000 X:00FF Y:0000 P:eNvMXdizc	; Call AreaLoadHelper. $08 points to an address like $1f1 or $1f3 for the argument
+$81/A374 C2 30       REP #$30                A:0000 X:00FF Y:0000 P:eNvMXdizc
+$81/A376 6B          RTL                     A:0000 X:00FF Y:0000 P:eNvmxdizc
+
+/////////////////////////////////////////
+
+Function: ???
+...
+Loop_A3E6:
+$81/A3E6 E2 20       SEP #$20                A:FFFF X:00FF Y:00FF P:eNvMXdizc
+$81/A3E8 A9 00       LDA #$00                A:FFFF X:00FF Y:00FF P:eNvMXdizc
+$81/A3EA 48          PHA                     A:FF00 X:00FF Y:00FF P:envMXdiZc
+$81/A3EB AF 72 03 80 LDA $800372[$80:0372]   A:FF00 X:00FF Y:00FF P:envMXdiZc
+$81/A3EF 48          PHA                     A:FF02 X:00FF Y:00FF P:envMXdizc
+$81/A3F0 F4 06 00    PEA $0006               A:FF02 X:00FF Y:00FF P:envMXdizc
+
+$81/A3F3 22 02 80 81 JSL $818002[$81:8002]   A:0005 X:00FF Y:0000 P:eNvMXdizC	; Call AreaLoadHelper
+
+$81/A3F7 90 ED       BCC $ED    [$A3E6]      A:0005 X:00FF Y:0000 P:eNvMXdizC	; goto Loop_A3E6
+$81/A3F9 AF 0C 1D 80 LDA $801D0C[$80:1D0C]   A:0005 X:00FF Y:0000 P:eNvMXdizC
+$81/A3FD CF 70 03 80 CMP $800370[$80:0370]   A:0005 X:00FF Y:0000 P:envMXdizC
+$81/A401 F0 16       BEQ $16    [$A419]      A:0005 X:00FF Y:0000 P:envMXdizC
+$81/A403 F4 01 00    PEA $0001               A:0005 X:00FF Y:0000 P:envMXdizC
+$81/A406 22 02 80 81 JSL $818002[$81:8002]   A:0005 X:00FF Y:0000 P:envMXdizC	; Call AreaLoadHelper
+...
+
+/////////////////////////////////////////
+
+Function: ???
+...
+$81/A40A A9 00       LDA #$00                A:0100 X:00FF Y:0000 P:envMXdiZc
+$81/A40C 48          PHA                     A:0100 X:00FF Y:0000 P:envMXdiZc
+$81/A40D AF 0C 1D 80 LDA $801D0C[$80:1D0C]   A:0100 X:00FF Y:0000 P:envMXdiZc
+$81/A411 48          PHA                     A:0100 X:00FF Y:0000 P:envMXdiZc
+$81/A412 F4 02 00    PEA $0002               A:0100 X:00FF Y:0000 P:envMXdiZc
+$81/A415 22 02 80 81 JSL $818002[$81:8002]   A:0100 X:00FF Y:0000 P:envMXdiZc	; Call AreaLoadHelper
+$81/A419 AF 0D 1D 80 LDA $801D0D[$80:1D0D]   A:0100 X:00FF Y:0000 P:envMXdiZc
+$81/A41D 30 15       BMI $15    [$A434]      A:01FF X:00FF Y:0000 P:eNvMXdizc
+$81/A434 AF 0C 1D 80 LDA $801D0C[$80:1D0C]   A:01FF X:00FF Y:0000 P:eNvMXdizc
+$81/A438 8F 70 03 80 STA $800370[$80:0370]   A:0105 X:00FF Y:0000 P:envMXdizc
+$81/A43C AF 0D 1D 80 LDA $801D0D[$80:1D0D]   A:0105 X:00FF Y:0000 P:envMXdizc
+$81/A440 8F 71 03 80 STA $800371[$80:0371]   A:01FF X:00FF Y:0000 P:eNvMXdizc
+$81/A444 AF 0E 1D 80 LDA $801D0E[$80:1D0E]   A:01FF X:00FF Y:0000 P:eNvMXdizc
+$81/A448 CF 72 03 80 CMP $800372[$80:0372]   A:010C X:00FF Y:0000 P:envMXdizc
+$81/A44C F0 23       BEQ $23    [$A471]      A:010C X:00FF Y:0000 P:envMXdizC
+$81/A44E AF 6B 03 80 LDA $80036B[$80:036B]   A:010C X:00FF Y:0000 P:envMXdizC
+$81/A452 D0 15       BNE $15    [$A469]      A:0100 X:00FF Y:0000 P:envMXdiZC
+$81/A454 A9 00       LDA #$00                A:0100 X:00FF Y:0000 P:envMXdiZC
+$81/A456 48          PHA                     A:0100 X:00FF Y:0000 P:envMXdiZC
+$81/A457 AF 0E 1D 80 LDA $801D0E[$80:1D0E]   A:0100 X:00FF Y:0000 P:envMXdiZC
+$81/A45B 48          PHA                     A:010C X:00FF Y:0000 P:envMXdizC
+$81/A45C F4 FF FF    PEA $FFFF               A:010C X:00FF Y:0000 P:envMXdizC
+$81/A45F F4 50 00    PEA $0050               A:010C X:00FF Y:0000 P:envMXdizC
+$81/A462 F4 03 00    PEA $0003               A:010C X:00FF Y:0000 P:envMXdizC
+$81/A465 22 02 80 81 JSL $818002[$81:8002]   A:010C X:00FF Y:0000 P:envMXdizC	; Call AreaLoadHelper
+$81/A469 AF 0E 1D 80 LDA $801D0E[$80:1D0E]   A:0000 X:00FF Y:0000 P:eNvMXdizc
+$81/A46D 8F 72 03 80 STA $800372[$80:0372]   A:000C X:00FF Y:0000 P:envMXdizc
+$81/A471 C2 30       REP #$30                A:000C X:00FF Y:0000 P:envMXdizc
+$81/A473 6B          RTL                     A:000C X:00FF Y:0000 P:envmxdizc
+
+/////////////////////////////////////////
+
+Function: AreaLoadImpl2()
+$81/A377 E2 30       SEP #$30                A:0091 X:0006 Y:0054 P:eNvmxdizc
+$81/A379 AF 0E 1D 80 LDA $801D0E[$80:1D0E]   A:0091 X:0006 Y:0054 P:eNvMXdizc
+$81/A37D CF 72 03 80 CMP $800372[$80:0372]   A:000A X:0006 Y:0054 P:envMXdizc
+$81/A381 F0 76       BEQ $76    [$A3F9]      A:000A X:0006 Y:0054 P:envMXdizC
+$81/A383 AF 72 03 80 LDA $800372[$80:0372]   A:000A X:0006 Y:0054 P:envMXdizC
+$81/A387 30 70       BMI $70    [$A3F9]      A:0002 X:0006 Y:0054 P:envMXdizC
+$81/A389 C2 20       REP #$20                A:0002 X:0006 Y:0054 P:envMXdizC
+$81/A38B AF C5 1C 80 LDA $801CC5[$80:1CC5]   A:0002 X:0006 Y:0054 P:envmXdizC	; Load the location index.
+										; Rivendell(K): 0138
+										; MoriaEntrance(L): 00EF
+										; Moria1 (M): 0051
+										
+										; Location index needs to be >= 54 otherwise it won't load it and will hang forever. (54 exactly is ok.)
+										; Although, hacking the moria1 code to be 54 exactly will just spawn frodo inside a wall in a random earlygame cave.
+										
+$81/A38F C9 54 00    CMP #$0054              A:0051 X:0006 Y:0054 P:envmXdizC	; AreaIndex needs to be >= 54.
+$81/A392 B0 52       BCS $52    [$A3E6]      A:0051 X:0006 Y:0054 P:eNvmXdizc	; If AreaIndex < 54, goto InvalidAreaIndex_TooLow. Otherwise, goto ValidAreaIndex.
+
+InvalidAreaIndex_TooLow:
+$81/A394 E2 20       SEP #$20                A:0051 X:0006 Y:0054 P:eNvmXdizc
+$81/A396 AF 0E 1D 80 LDA $801D0E[$80:1D0E]   A:0051 X:0006 Y:0054 P:eNvMXdizc
+$81/A39A C9 04       CMP #$04                A:000A X:0006 Y:0054 P:envMXdizc
+$81/A39C D0 0E       BNE $0E    [$A3AC]      A:000A X:0006 Y:0054 P:envMXdizC
+$81/A3AC E2 20       SEP #$20                A:000A X:0006 Y:0054 P:envMXdizC
+$81/A3AE A9 00       LDA #$00                A:000A X:0006 Y:0054 P:envMXdizC
+$81/A3B0 48          PHA                     A:0000 X:0006 Y:0054 P:envMXdiZC
+$81/A3B1 AF 72 03 80 LDA $800372[$80:0372]   A:0000 X:0006 Y:0054 P:envMXdiZC
+$81/A3B5 48          PHA                     A:0002 X:0006 Y:0054 P:envMXdizC
+$81/A3B6 F4 06 00    PEA $0006               A:0002 X:0006 Y:0054 P:envMXdizC
+$81/A3B9 22 02 80 81 JSL $818002[$81:8002]   A:0002 X:0006 Y:0054 P:envMXdizC
+$81/A3BD 85 34       STA $34    [$00:0034]   A:FFFF X:00FF Y:00FF P:eNvMXdizc	; Fall through into BadLoop
+
+BadLoop:
+$81/A3BF A9 00       LDA #$00                A:FFFF X:00FF Y:00FF P:eNvMXdizc	
+$81/A3C1 48          PHA                     A:FF00 X:00FF Y:00FF P:envMXdiZc
+$81/A3C2 AF 72 03 80 LDA $800372[$80:0372]   A:FF00 X:00FF Y:00FF P:envMXdiZc
+$81/A3C6 48          PHA                     A:FF02 X:00FF Y:00FF P:envMXdizc
+$81/A3C7 F4 06 00    PEA $0006               A:FF02 X:00FF Y:00FF P:envMXdizc
+$81/A3CA 22 02 80 81 JSL $818002[$81:8002]   A:FF02 X:00FF Y:00FF P:envMXdizc
+$81/A3CE C5 34       CMP $34    [$00:0034]   A:FFFF X:00FF Y:00FF P:eNvMXdizc
+$81/A3D0 F0 ED       BEQ $ED    [$A3BF]      A:FFFF X:00FF Y:00FF P:envMXdiZC
+// Never break out of here.
+
+ValidAreaIndex_BugLoop:
+// This is only supposed to iterate once.
+$81/A3E6 E2 20       SEP #$20                A:00EF X:0002 Y:001C P:envmXdizC
+		
+$81/A3E8 A9 00       LDA #$00                A:00EF X:0002 Y:001C P:envMXdizC
+$81/A3EA 48          PHA                     A:0000 X:0002 Y:001C P:envMXdiZC	; AreaIndex gets wiped. Push 0
+
+$81/A3EB AF 72 03 80 LDA $800372[$80:0372]   A:0000 X:0002 Y:001C P:envMXdiZC	; Push 02 FF.
+										;long addr contains '02 FF' irrespective of map
+$81/A3EF 48          PHA                     A:0002 X:0002 Y:001C P:envMXdizC
+
+$81/A3F0 F4 06 00    PEA $0006               A:0002 X:0002 Y:001C P:envMXdizC
+$81/A3F3 22 02 80 81 JSL $818002[$81:8002]   A:0002 X:0002 Y:001C P:envMXdizC	; Call AreaLoadHelper() that should clear carry
+
+$81/A3F7 90 ED       BCC $ED    [$A3E6]      A:0005 X:00FF Y:0000 P:eNvMXdizC	; For Moria1- keeps jumping back to ValidAreaIndex_BugLoop. Loops forever. xxx investigate what should break it out.
+
+$81/A3F9 AF 0C 1D 80 LDA $801D0C[$80:1D0C]   A:0005 X:00FF Y:0000 P:eNvMXdizC
+$81/A3FD CF 70 03 80 CMP $800370[$80:0370]   A:0005 X:00FF Y:0000 P:envMXdizC
+$81/A401 F0 16       BEQ $16    [$A419]      A:0005 X:00FF Y:0000 P:envMXdizC
+$81/A403 F4 01 00    PEA $0001               A:0005 X:00FF Y:0000 P:envMXdizC
+$81/A406 22 02 80 81 JSL $818002[$81:8002]   A:0005 X:00FF Y:0000 P:envMXdizC
+$81/A40A A9 00       LDA #$00                A:01ED X:00FF Y:0000 P:eNvMXdizC
+$81/A40C 48          PHA                     A:0100 X:00FF Y:0000 P:envMXdiZC
+$81/A40D AF 0C 1D 80 LDA $801D0C[$80:1D0C]   A:0100 X:00FF Y:0000 P:envMXdiZC
+$81/A411 48          PHA                     A:0105 X:00FF Y:0000 P:envMXdizC
+$81/A412 F4 02 00    PEA $0002               A:0105 X:00FF Y:0000 P:envMXdizC
+$81/A415 22 02 80 81 JSL $818002[$81:8002]   A:0105 X:00FF Y:0000 P:envMXdizC
+$81/A419 AF 0D 1D 80 LDA $801D0D[$80:1D0D]   A:0100 X:00FF Y:0000 P:envMXdiZc
+$81/A41D 30 15       BMI $15    [$A434]      A:01FF X:00FF Y:0000 P:eNvMXdizc
+$81/A434 AF 0C 1D 80 LDA $801D0C[$80:1D0C]   A:01FF X:00FF Y:0000 P:eNvMXdizc
+$81/A438 8F 70 03 80 STA $800370[$80:0370]   A:0105 X:00FF Y:0000 P:envMXdizc
+$81/A43C AF 0D 1D 80 LDA $801D0D[$80:1D0D]   A:0105 X:00FF Y:0000 P:envMXdizc
+$81/A440 8F 71 03 80 STA $800371[$80:0371]   A:01FF X:00FF Y:0000 P:eNvMXdizc
+
+$81/A444 AF 0E 1D 80 LDA $801D0E[$80:1D0E]   A:01FF X:00FF Y:0000 P:eNvMXdizc
+$81/A448 CF 72 03 80 CMP $800372[$80:0372]   A:010C X:00FF Y:0000 P:envMXdizc
+$81/A44C F0 23       BEQ $23    [$A471]      A:010C X:00FF Y:0000 P:envMXdizC	If 0, goto AreaLoadImpl2_Done
+
+$81/A44E AF 6B 03 80 LDA $80036B[$80:036B]   A:010C X:00FF Y:0000 P:envMXdizC
+$81/A452 D0 15       BNE $15    [$A469]      A:0100 X:00FF Y:0000 P:envMXdiZC
+$81/A454 A9 00       LDA #$00                A:0100 X:00FF Y:0000 P:envMXdiZC
+$81/A456 48          PHA                     A:0100 X:00FF Y:0000 P:envMXdiZC
+$81/A457 AF 0E 1D 80 LDA $801D0E[$80:1D0E]   A:0100 X:00FF Y:0000 P:envMXdiZC
+$81/A45B 48          PHA                     A:010C X:00FF Y:0000 P:envMXdizC
+$81/A45C F4 FF FF    PEA $FFFF               A:010C X:00FF Y:0000 P:envMXdizC
+$81/A45F F4 50 00    PEA $0050               A:010C X:00FF Y:0000 P:envMXdizC
+$81/A462 F4 03 00    PEA $0003               A:010C X:00FF Y:0000 P:envMXdizC
+$81/A465 22 02 80 81 JSL $818002[$81:8002]   A:010C X:00FF Y:0000 P:envMXdizC
+$81/A469 AF 0E 1D 80 LDA $801D0E[$80:1D0E]   A:0000 X:00FF Y:0000 P:eNvMXdizc
+$81/A46D 8F 72 03 80 STA $800372[$80:0372]   A:000C X:00FF Y:0000 P:envMXdizc
+
+AreaLoadImpl2_Done:
+$81/A471 C2 30       REP #$30                A:000C X:00FF Y:0000 P:envMXdizc
+$81/A473 6B          RTL                     A:000C X:00FF Y:0000 P:envmxdizc
+
