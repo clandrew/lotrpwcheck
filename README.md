@@ -51,6 +51,7 @@ If you're on console or you have a Pro Action Replay device, you can fix the bug
 81A3900C
 81A35C0C
 ```
+Those codes patch the game code to fix the bug and allow the game to accept Moria passwords. They don't require game reset.
 
 I wrote a [blog post](http://cml-a.com/content/2021/04/06/lord-of-the-rings-snes-bugfix/) explaining the bug and where the fix comes from.
 
