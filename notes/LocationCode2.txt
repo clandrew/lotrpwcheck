@@ -34,7 +34,7 @@ GeneralLoop()
 	LoadLevelGeneral() $80/81A0 
 		LoadLevel() $80/8E42
 			AreaLoadImpl() $80/F63F
-				AreaLoadImpl2() $81/A377
+				AreaLoadStaging() $81/A377
 		FadeInNewLevel() - $80/8A6B
 
 general- AreaLoadHelper called  5 times total in valid case.
@@ -216,7 +216,7 @@ $80/8E9C 20 4A C3    JSR $C34A  [$80:C34A]   A:0021 X:0020 Y:0080 P:envmxdizC
 SaneAreaLoadCode:
 $80/8E9F AD C5 1C    LDA $1CC5  [$80:1CC5]   A:0021 X:0020 Y:0080 P:envmxdizC	; Load the area code back again
 $80/8EA2 20 1B 8F    JSR $8F1B  [$80:8F1B]   A:0021 X:0020 Y:0080 P:envmxdizC	; Call ProcessAreaLoadCode0 some function that operates on it
-$80/8EA5 22 3A A3 81 JSL $81A33A[$81:A33A]   A:0021 X:0020 Y:0080 P:envmxdizC
+$80/8EA5 22 3A A3 81 JSL $81A33A[$81:A33A]   A:0021 X:0020 Y:0080 P:envmxdizC	; CallAreaLoadHelperArg4 ($81:A33A)
 $80/8EA9 20 4D 8F    JSR $8F4D  [$80:8F4D]   A:0021 X:0020 Y:0080 P:envmxdizC
 $80/8EAC A2 00 60    LDX #$6000              A:0021 X:0020 Y:0080 P:envmxdizC
 $80/8EAF 20 CC 8F    JSR $8FCC  [$80:8FCC]   A:0021 X:0020 Y:0080 P:envmxdizC	; Takes a second. Fades out the music
@@ -284,7 +284,7 @@ $80/F69F A9 91       LDA #$91                A:0002 X:0006 Y:0054 P:envMXdizc
 $80/F6A1 8D 31 21    STA $2131  [$80:2131]   A:0091 X:0006 Y:0054 P:eNvMXdizc
 $80/F6A4 C2 30       REP #$30                A:0091 X:0006 Y:0054 P:eNvMXdizc
 $80/F6A6 80 20       BRA $20    [$F6C8]      A:0091 X:0006 Y:0054 P:eNvmxdizc
-$80/F6C8 22 77 A3 81 JSL $81A377[$81:A377]   A:0091 X:0006 Y:0054 P:eNvmxdizc	; Call AreaLoadImpl2. Last line here executed for Moria 1
+$80/F6C8 22 77 A3 81 JSL $81A377[$81:A377]   A:0091 X:0006 Y:0054 P:eNvmxdizc	; Call AreaLoadStaging. Last line here executed for Moria 1
 $80/F6CC 60          RTS                     A:000C X:00FF Y:0000 P:envmxdizc
 
 ////////////////////////////////////////////
@@ -303,45 +303,33 @@ $81/8005 08          PHP                     A:0002 X:0002 Y:001C P:eNvMXdizC
 $81/8006 0B          PHD                     A:0002 X:0002 Y:001C P:eNvMXdizC
 $81/8007 C2 30       REP #$30                A:0002 X:0002 Y:001C P:eNvMXdizC	; Enter 16-bit mode
 
-$81/8009 3B          TSC                     A:0002 X:0002 Y:001C P:eNvmxdizC	; Transfer stack pointer to (16-bit) acc
-$81/800A 5B          TCD                     A:01E9 X:0002 Y:001C P:envmxdizC	; Transfer (16-bit) acc to Direct register 
+$81/8009 3B          TSC                     A:0002 X:0002 Y:001C P:eNvmxdizC	; Load the argument off the stack
+$81/800A 5B          TCD                     A:01E9 X:0002 Y:001C P:envmxdizC	; 									
+$81/800B A5 08       LDA $08    [$00:01F1]   A:01E9 X:0002 Y:001C P:envmxdizC	; 
 
-										; Load an argument off the stack
-										
-										; Does not load from $7E0008.
-										; Because this op is influenced by direct register.
-										; If DP were 0000, sure LDA $08 would load from 7E0008.
-										; But DP is 1E9.
-										; If DP==1, then LDA $08 loads from 7E0009.
-										; If DP==100, then LDA $08 loads from 7E0108.
-										; So if DP==1E9, then LDA $08 loads from 7E01E9+08 = 7E01F1
-										
-$81/800B A5 08       LDA $08    [$00:01F1]   A:01E9 X:0002 Y:001C P:envmxdizC	; Load from 7E01F1
-										; Points to	{01F1, 	01F1, 	01F3,	01F1,	01ED}
-										; Contains 	{4, 	6, 	A4,	2,	3}
 $81/800D C9 0C 00    CMP #$000C              A:0006 X:0002 Y:001C P:envmxdizC
 $81/8010 B0 07       BCS $07    [$8019]      A:0006 X:0002 Y:001C P:eNvmxdizc	; Validity check. If >=0xC, goto InputTooHigh
 
-$81/8012 0A          ASL A                   A:0006 X:0002 Y:001C P:eNvmxdizc	; 
+$81/8012 0A          ASL A                   A:0006 X:0002 Y:001C P:eNvmxdizc	; Use argument from off the stack as an offset into jump table
 $81/8013 AA          TAX                     A:000C X:0002 Y:001C P:envmxdizc	; 
 $81/8014 2B          PLD                     A:000C X:000C Y:001C P:envmxdizc
 $81/8015 28          PLP                     A:000C X:000C Y:001C P:envmxdiZc
 $81/8016 7C 35 80    JMP ($8035,x)[$81:8865] A:000C X:000C Y:001C P:eNvMXdizC	; Calls some entry in a function table
 										; Look at 818035 + x (e.g., if X == 2, 818037) to find the address of where to jump
 										; Valid addresses:
-										X	Address
-										0	83E0
-										2	8539
-										4	85B6
-										6	867D
-										8	8A5C
-										A	87FE
-										C	8865
-										E	88CD
-										10	891A
-										12	8984
-										14	89D1
-										16	8A1F
+										Arg	X	Address
+										0	0	83E0
+										1	2	8539
+										2	4	85B6
+										3	6	867D
+										4	8	8A5C
+										5	A	87FE
+										6	C	8865
+										7	E	88CD
+										8	10	891A
+										9	12	8984
+										A	14	89D1
+										B	16	8A1F
 										
 										D is 01E9
 										
@@ -463,20 +451,23 @@ $81/88AA AB          PLB                     A:0005 X:00FF Y:0000 P:eNvMXdizC
 $81/88AB 38          SEC                     A:0005 X:00FF Y:0000 P:eNvMXdizC	; Keep going?
 $81/88AC 6B          RTL                     A:0005 X:00FF Y:0000 P:eNvMXdizC
 
-AreaLoadHelper_OnLoadMoriaEntrace:
+AreaLoadHelper_OnLoadMoriaEntrace:	// Arg 4
+Commenting out this subfunction prevents levels from being loaded. 
+The symptom is just like the blocked Moria 1. Screen fades, music still plays, nothing changes.
 $81/8A5C 08          PHP                     A:0008 X:0008 Y:007E P:eNvMXdizC
 $81/8A5D 0B          PHD                     A:0008 X:0008 Y:007E P:eNvMXdizC
-$81/8A5E C2 30       REP #$30                A:0008 X:0008 Y:007E P:eNvMXdizC
+$81/8A5E C2 30       REP #$30                A:0008 X:0008 Y:007E P:eNvMXdizC	; Enter 16-bit mode
 $81/8A60 3B          TSC                     A:0008 X:0008 Y:007E P:eNvmxdizC
 $81/8A61 38          SEC                     A:01E9 X:0008 Y:007E P:envmxdizC
 $81/8A62 E9 06 00    SBC #$0006              A:01E9 X:0008 Y:007E P:envmxdizC
 $81/8A65 1B          TCS                     A:01E3 X:0008 Y:007E P:envmxdizC
 $81/8A66 5B          TCD                     A:01E3 X:0008 Y:007E P:envmxdizC
+
 $81/8A67 64 01       STZ $01    [$00:01E4]   A:01E3 X:0008 Y:007E P:envmxdizC
 $81/8A69 A5 01       LDA $01    [$00:01E4]   A:01E3 X:0008 Y:007E P:envmxdizC
-$81/8A6B 0A          ASL A                   A:0000 X:0008 Y:007E P:envmxdiZC
+$81/8A6B 0A          ASL A                   A:0000 X:0008 Y:007E P:envmxdiZC	; load 0
 $81/8A6C A8          TAY                     A:0000 X:0008 Y:007E P:envmxdiZc
-$81/8A6D B9 F1 90    LDA $90F1,y[$81:90F1]   A:0000 X:0008 Y:0000 P:envmxdiZc
+$81/8A6D B9 F1 90    LDA $90F1,y[$81:90F1]   A:0000 X:0008 Y:0000 P:envmxdiZc	; Is this an array? 00 F8 40 F8 80 F8 C0 F8 00 F9 40 F9 80 F9 C0 F9
 $81/8A70 85 03       STA $03    [$00:01E6]   A:F800 X:0008 Y:0000 P:eNvmxdizc
 $81/8A72 A9 7E 00    LDA #$007E              A:F800 X:0008 Y:0000 P:eNvmxdizc
 $81/8A75 85 05       STA $05    [$00:01E8]   A:007E X:0008 Y:0000 P:envmxdizc
@@ -524,6 +515,7 @@ $81/8ABD B5 07       LDA $07,x  [$00:01EA]   A:0000 X:0000 Y:0000 P:envMxdiZc
 $81/8ABF 95 0D       STA $0D,x  [$00:01F0]   A:0000 X:0000 Y:0000 P:envMxdiZc
 $81/8AC1 CA          DEX                     A:0000 X:0000 Y:0000 P:envMxdiZc
 $81/8AC2 10 F9       BPL $F9    [$8ABD]      A:0000 X:FFFF Y:0000 P:eNvMxdizc
+
 $81/8AC4 C2 20       REP #$20                A:0000 X:FFFF Y:0000 P:eNvMxdizc
 $81/8AC6 3B          TSC                     A:0000 X:FFFF Y:0000 P:eNvmxdizc
 $81/8AC7 18          CLC                     A:01E3 X:FFFF Y:0000 P:envmxdizc
@@ -538,7 +530,7 @@ $81/8AD2 18          CLC                     A:0000 X:00FF Y:0000 P:eNvMXdizC	; 
 $81/8AD3 6B          RTL                     A:0000 X:00FF Y:0000 P:eNvMXdizc
 
 /////////////////////////////////////////
-Function: $81:A33A
+Function: CallAreaLoadHelperArg4 ($81:A33A)
 $81/A33A E2 30       SEP #$30                A:0000 X:00FF Y:0000 P:eNvmxdizc
 $81/A33C AF 0E 1D 80 LDA $801D0E[$80:1D0E]   A:0000 X:00FF Y:0000 P:eNvMXdizc
 $81/A340 CF 72 03 80 CMP $800372[$80:0372]   A:0000 X:00FF Y:0000 P:eNvMXdizc
@@ -550,7 +542,8 @@ $81/A34E AF C3 1C 80 LDA $801CC3[$80:1CC3]   A:0000 X:00FF Y:0000 P:eNvmXdizc
 $81/A352 C9 EF 00    CMP #$00EF              A:0000 X:00FF Y:0000 P:eNvmXdizc
 $81/A355 F0 09       BEQ $09    [$A360]      A:0000 X:00FF Y:0000 P:eNvmXdizc
 $81/A357 AF C5 1C 80 LDA $801CC5[$80:1CC5]   A:0000 X:00FF Y:0000 P:eNvmXdizc
-$81/A35B C9 54 00    CMP #$0054              A:0000 X:00FF Y:0000 P:eNvmXdizc
+
+$81/A35B C9 54 00    CMP #$0054              A:0000 X:00FF Y:0000 P:eNvmXdizc	; Another place where we check the world index. If too low, goto InvalidLocation. The real min should be C as used for Moria 2
 $81/A35E 90 14       BCC $14    [$A374]      A:0000 X:00FF Y:0000 P:eNvmXdizc
 $81/A360 E2 20       SEP #$20                A:0000 X:00FF Y:0000 P:eNvmXdizc
 $81/A362 A9 00       LDA #$00                A:0000 X:00FF Y:0000 P:eNvMXdizc
@@ -558,8 +551,10 @@ $81/A364 48          PHA                     A:0000 X:00FF Y:0000 P:eNvMXdizc
 $81/A365 AF 72 03 80 LDA $800372[$80:0372]   A:0000 X:00FF Y:0000 P:eNvMXdizc
 $81/A369 48          PHA                     A:0000 X:00FF Y:0000 P:eNvMXdizc
 $81/A36A F4 00 01    PEA $0100               A:0000 X:00FF Y:0000 P:eNvMXdizc
-$81/A36D F4 04 00    PEA $0004               A:0000 X:00FF Y:0000 P:eNvMXdizc	; Push AreaLoadHelper's argument- use function table entry 4.
-$81/A370 22 02 80 81 JSL $818002[$81:8002]   A:0000 X:00FF Y:0000 P:eNvMXdizc	; Call AreaLoadHelper. $08 points to an address like $1f1 or $1f3 for the argument
+$81/A36D F4 04 00    PEA $0004               A:0000 X:00FF Y:0000 P:eNvMXdizc	;
+$81/A370 22 02 80 81 JSL $818002[$81:8002]   A:0000 X:00FF Y:0000 P:eNvMXdizc	; Call AreaLoadHelper arg 4. 
+
+InvalidLocation:
 $81/A374 C2 30       REP #$30                A:0000 X:00FF Y:0000 P:eNvMXdizc
 $81/A376 6B          RTL                     A:0000 X:00FF Y:0000 P:eNvmxdizc
 
@@ -621,7 +616,7 @@ $81/A473 6B          RTL                     A:000C X:00FF Y:0000 P:envmxdizc
 
 /////////////////////////////////////////
 
-Function: AreaLoadImpl2()
+Function: AreaLoadStaging()
 $81/A377 E2 30       SEP #$30                A:0091 X:0006 Y:0054 P:eNvmxdizc
 $81/A379 AF 0E 1D 80 LDA $801D0E[$80:1D0E]   A:0091 X:0006 Y:0054 P:eNvMXdizc
 $81/A37D CF 72 03 80 CMP $800372[$80:0372]   A:000A X:0006 Y:0054 P:envMXdizc
@@ -720,3 +715,11 @@ AreaLoadImpl2_Done:
 $81/A471 C2 30       REP #$30                A:000C X:00FF Y:0000 P:envMXdizc
 $81/A473 6B          RTL                     A:000C X:00FF Y:0000 P:envmxdizc
 
+
+To fix a glitch where passwords from inside Moria are rejected
+
+81CBF10C
+81A3900C
+81A35C0C
+
+<p>[video width="1000" height="360" mp4="http://cml-a.com/content/wp-content/uploads/2019/09/Compare2.mp4"][/video]</p>
