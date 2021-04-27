@@ -714,12 +714,3 @@ $81/A46D 8F 72 03 80 STA $800372[$80:0372]   A:000C X:00FF Y:0000 P:envMXdizc
 AreaLoadImpl2_Done:
 $81/A471 C2 30       REP #$30                A:000C X:00FF Y:0000 P:envMXdizc
 $81/A473 6B          RTL                     A:000C X:00FF Y:0000 P:envmxdizc
-
-
-To fix a glitch where passwords from inside Moria are rejected
-
-81CBF10C
-81A3900C
-81A35C0C
-
-<p>[video width="1000" height="360" mp4="http://cml-a.com/content/wp-content/uploads/2019/09/Compare2.mp4"][/video]</p>
