@@ -10,7 +10,7 @@ To fix the glitch itself, see below.
 ## Glitched Passwords
 If you’re in Moria past the entrance and the first part and request a password, the game will give you one. However, if you write down and try to use that same password later, the game won’t accept it.
 
-The last two location codes, 'Moria 1 (code M)' and 'Moria 2 (code N)' are glitched in that the game provides them to you but won't ever accept them. This is especially bad since backtracking to the Moria entrance or even to the start of the game won't get you valid passwords again.
+The last two location codes, 'Moria 1 (code M)' and 'Moria 2 (code N)' are glitched in that the game provides them to you but won't ever accept them. This is especially bad, since backtracking to the Moria entrance-- or even to the start of the game-- won't get you valid passwords again.
 
 If you're on console with no cheat device, you can use this program to fix your password to 'Moria entrance (code L)'. It's a bit of a hassle since you still need to go through Moria, but at least you can keep your levels, equipment, items, and doors that were unlocked stay unlocked.
 
