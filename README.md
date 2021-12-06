@@ -5,6 +5,8 @@ This is a tool for verifying whether a password for the game "J.R.R. Tolkien's T
 
 I wrote a blog post describing the password format, [here](http://cml-a.com/content/2021/03/31/lord-of-the-rings-snes-password-format/).
 
+To fix the glitch itself, see below.
+
 ## Glitched Passwords
 If you’re in Moria past the entrance and the first part and request a password, the game will give you one. However, if you write down and try to use that same password later, the game won’t accept it.
 
